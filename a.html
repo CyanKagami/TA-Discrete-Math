@@ -101,15 +101,16 @@
                     </h3>
                     <div class="text-sm text-slate-600 leading-relaxed space-y-2">
                         <p>
-                            <b>ความสัมพันธ์ทวิภาค (Binary Relation)</b> $R$ จากเซต $A$ ไปยังเซต $B$ คือ สับเซตใดๆ ของผลคูณคาร์ทีเซียน $A \times B$ (เขียนแทนด้วย $R \subseteq A \times B$) ตัวอย่างความสัมพันธ์ทั่วไป เช่น:
+                            <b>ความสัมพันธ์ทวิภาค (Binary Relation)</b> $R$ จากเซต $A$ ไปยังเซต $B$ คือ สับเซตใดๆ ของผลคูณคาร์ทีเซียน $A \times B$ (เขียนแทนด้วย $R \subseteq A \times B$)<br>
+                            ในกรณีที่ $A = B$ เราจะเรียกความสัมพันธ์ $R$ จาก $A$ ไป $A$ ว่าเป็น <b>"ความสัมพันธ์บนเซต $A$" (Relation on set $A$)</b>
                         </p>
-                        <div class="pl-6 bg-white p-4 rounded-xl border border-slate-200 space-y-1.5 font-mono text-xs text-indigo-600">
-                            <div class="flex items-start"><span class="text-slate-400 mr-2">•</span> <span>$R_1 = \{(5, A), (1, C), (3, D)\}$ เป็นความสัมพันธ์จากเซต $\{1, 2, 3, 4, 5\}$ ไปยัง $\{A, B, C, D\}$</span></div>
-                            <div class="flex items-start"><span class="text-slate-400 mr-2">•</span> <span>$R_2 = \{(PSCP, A), (ICS, C), (DM, A)\}$ เป็นความสัมพันธ์จากเซตของรายวิชาไปยังเซตของผลการเรียน</span></div>
+                        <p><b>ตัวอย่างความสัมพันธ์</b></p>
+                        <div class="pl-6 bg-white p-2 space-y-1.5 font-mono text-xs text-indigo-600">
+                            <div class="flex items-start"><span class="text-slate-400 mr-2">•</span> <span>$T = \{(5, a), (1, c), (3, d)\}$ เป็นความสัมพันธ์จากเซต $\{1, 2, 3, 4, 5\}$ ไปยัง $\{a, b, c, d\}$</span></div>
+                            <div class="flex items-start"><span class="text-slate-400 mr-2">•</span> <span>$\alpha = \{(PSCP, A), (ICS, C), (DM, A)\}$ เป็นความสัมพันธ์จากเซตของรายวิชาไปยังเซตของผลการเรียน</span></div>
                         </div>
-                        <p class="text-xs text-slate-500 pt-1">
-                            💡 ในกรณีที่ $A = B$ เราจะเรียกความสัมพันธ์ $R$ จาก $A$ ไป $A$ ว่าเป็น <b>"ความสัมพันธ์บนเซต $A$" (Relation on set $A$)</b>
-                        </p>
+                        สำหรับความสัมพันธ์ $R$ ใดๆ ถ้า $(a, b) \in R$ เราจะสามารถเขียนได้ว่า $a\,R\,b$ ซึ่งสื่อว่า $a$ มีความสัมพันธ์ $R$ กับ $b$ <br>
+                        ถ้ายกตัวอย่างจากทั้งสองความสัมพันธ์ข้างบนก็เช่น $5\; T\; a$ และ $DM \,\alpha\,A$ เป็นตัน
                     </div>
                 </div>
 
@@ -463,13 +464,13 @@
                         <h3 class="text-lg font-bold text-slate-900 flex items-center">
                             <i class="fa-solid fa-book mr-2"></i> 1. นิยามของความสัมพันธ์สมมูล (Definition of Equivalence Relation)
                         </h3>
-                        <p class="text-xs text-slate-600 leading-relaxed">
-                            ให้ $R$ เป็นความสัมพันธ์บนเซตไม่ว่าง $A$ (นั่นคือ $R \subseteq A \times A$) เราจะเรียก $R$ ว่าเป็น <b>ความสัมพันธ์สมมูล</b> ก็ต่อเมื่อ $R$ มีสมบัติครบถ้วนทั้ง 3 ประการดังต่อไปนี้สำหรับทุกๆ สมาชิกในเซต:
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            ให้ $\sim$ เป็นความสัมพันธ์บนเซตไม่ว่าง $A$ เราจะเรียก $\sim$ ว่าเป็น <b>ความสัมพันธ์สมมูล (Equivalence Relation)</b> ก็ต่อเมื่อ $\sim$ มีสมบัติครบถ้วนทั้ง 3 ประการดังต่อไปนี้:
                         </p>
                         <ul class="text-sm text-slate-600 pl-6 space-y-1 list-disc">
-                            <li><b>สมบัติการสะท้อน (Reflexive):</b> สำหรับทุกๆ $a \in A$ จะได้ว่า $(a, a) \in R$ (หรือ $a R a$)</li>
-                            <li><b>สมบัติการสมมาตร (Symmetric):</b> สำหรับทุกๆ $a, b \in A$ ถ้า $(a, b) \in R$ แล้วจะได้ว่า $(b, a) \in R$ (ถ้า $a R b$ แล้ว $b R a$)</li>
-                            <li><b>สมบัติการถ่ายทอด (Transitive):</b> สำหรับทุกๆ $a, b, c \in A$ ถ้า $(a, b) \in R$ และ $(b, c) \in R$ แล้วจะได้ว่า $(a, c) \in R$ (ถ้า $a R b$ และ $b R c$ แล้ว $a R c$)</li>
+                            <li><b>สมบัติการสะท้อน (Reflexive):</b> สำหรับทุกๆ $a \in A$ จะได้ว่า $(a, a) \in \sim$ (หรือ $a \sim a$)</li>
+                            <li><b>สมบัติการสมมาตร (Symmetric):</b> สำหรับทุกๆ $a, b \in A$ ถ้า $(a, b) \in \sim$ แล้วจะได้ว่า $(b, a) \in \sim$ (ถ้า $a \sim b$ แล้ว $b \sim a$)</li>
+                            <li><b>สมบัติการถ่ายทอด (Transitive):</b> สำหรับทุกๆ $a, b, c \in A$ ถ้า $(a, b) \in \sim$ และ $(b, c) \in \sim$ แล้วจะได้ว่า $(a, c) \in \sim$ (ถ้า $a \sim b$ และ $b \sim c$ แล้ว $a \sim c$)</li>
                         </ul>
                     </div>
                         <hr class="border-slate-200">
@@ -488,6 +489,22 @@
                         </p>
                     </div>
                     <hr class="border-slate-200">
+                    <!-- Subsection 3: Congruence Modulo Review -->
+                     <div class="space-y-3">
+                        <h3 class="text-lg font-bold text-slate-900 flex items-center">
+                            <i class="fa-solid fa-layer-group mr-2"></i> 3. ตัวอย่าง: Congruence Modulo
+                        </h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            จากที่ได้เรียนมา สำหรับจำนวนเต็ม $m$ ที่มีค่ามากกว่า 0 เรานิยามความสัมพันธ์ Congruence Modulo m บนเซตของจำนวนเต็ม ได้ดังนี้ สำหรับจำนวนเต็ม $a$ และ $b$ ใดๆ
+                            เรากำหนดให้
+                        </p>
+                        <div class="font-mono text-indigo-600 bg-slate-50 w-full rounded-lg text-center border border-slate-200 text-xs">
+                            $$a \equiv b \pmod m \Leftrightarrow m \mid (a - b)$$
+                        </div>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                ซึ่งนิยามนี้เทียบเท่ากับเงื่อนไขที่ว่า ทั้ง $a$ และ $b$ ต้องมี <b>"เศษเหลือจากการหารด้วย $m$" ที่เท่ากันพอดี</b>
+                            </p>
+                    </div>
 
                     <!-- Modulo Control Toolbar -->
                     <div class="bg-white border border-slate-200 p-4 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs mt-6">
