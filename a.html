@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบเรียนรู้เรื่องความสัมพันธ์แบบโต้ตอบ (Relations Interactive Guide)</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Sarabun', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans text-slate-800 antialiased flex flex-col md:flex-row min-h-screen">
+
+    <!-- LEFT SIDEBAR NAVBAR -->
+    <aside class="w-full md:w-80 bg-slate-900 text-slate-300 flex flex-col border-r border-slate-800 md:sticky md:top-0 md:h-screen z-50">
+        <div class="p-6 border-b border-slate-800 flex items-center space-x-3">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-indigo-600 text-white shadow-md shadow-indigo-900/50">
+                <i class="fa-solid fa-diagram-project text-xl"></i>
+            </div>
+            <div>
+                <span class="text-lg font-bold tracking-tight text-white block">Discrete Mathematics</span>
+                <span class="block text-xs font-semibold uppercase tracking-wider text-indigo-400">บทที่ 10: ความสัมพันธ์</span>
+            </div>
+        </div>
+
+        <!-- 4 Main Navigation Tabs -->
+        <nav id="sidebar-nav" class="flex-1 p-4 space-y-1 overflow-y-auto">
+            <button onclick="switchTab('sec-cartesian')" id="btn-sec-cartesian" class="w-full flex items-center space-x-3 rounded-xl px-4 py-3 text-sm font-medium transition duration-200 text-white bg-indigo-600 shadow-sm">
+                <i class="fa-solid fa-cube text-base w-5 text-center"></i>
+                <span>1. Cartesian Product & Relation</span>
+            </button>
+            <button onclick="switchTab('sec-properties')" id="btn-sec-properties" class="w-full flex items-center space-x-3 rounded-xl px-4 py-3 text-sm font-medium transition duration-200 text-slate-400 hover:bg-slate-800 hover:text-slate-100">
+                <i class="fa-solid fa-list-check text-base w-5 text-center"></i>
+                <span>2. Relation Properties</span>
+            </button>
+            <button onclick="switchTab('sec-equivalence')" id="btn-sec-equivalence" class="w-full flex items-center space-x-3 rounded-xl px-4 py-3 text-sm font-medium transition duration-200 text-slate-400 hover:bg-slate-800 hover:text-slate-100">
+                <i class="fa-solid fa-certificate text-base w-5 text-center"></i>
+                <span>3. Equivalence Relation</span>
+            </button>
+            <button onclick="switchTab('sec-applications')" id="btn-sec-applications" class="w-full flex items-center space-x-3 rounded-xl px-4 py-3 text-sm font-medium transition duration-200 text-slate-400 hover:bg-slate-800 hover:text-slate-100">
+                <i class="fa-solid fa-database text-base w-5 text-center"></i>
+                <span>4. Application (n-ary & DB)</span>
+            </button>
+        </nav>
+
+        <div class="p-4 border-t border-slate-800 text-[11px] text-slate-500 text-center">
+            <p class="font-medium text-slate-400">ระบบเว็บสื่อการสอนจำลองความสัมพันธ์</p>
+            <p class="mt-0.5">Discrete Mathematics Interactive</p>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <div class="flex-1 flex flex-col min-w-0">
+        <main class="flex-1 p-6 sm:p-8 lg:p-12 max-w-7xl w-full mx-auto space-y-12">
+            
+            <!-- SECTION 1: Cartesian Product and Relation -->
+            <section id="sec-cartesian" class="tab-content space-y-12">
+                
+                <!-- Header Title -->
+                <div class="border-b border-slate-200 pb-6">
+                    <div class="flex items-center space-x-3">
+                        <span class="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 font-bold text-indigo-700">1</span>
+                        <h2 class="text-2xl font-bold text-slate-900 tracking-tight">ผลคูณคาร์ทีเซียนและความสัมพันธ์ (Cartesian Product and Relation)</h2>
+                    </div>
+                </div>
+
+                <!-- 1. Definition of Cartesian Product -->
+                <div class="space-y-3">
+                    <h3 class="text-lg font-bold text-slate-900 flex items-center">
+                        <i class="fa-solid fa-book text-indigo-500 mr-2.5"></i>1. นิยามของผลคูณคาร์ทีเซียน (Definition of Cartesian Product)
+                    </h3>
+                    <p class="text-sm text-slate-600 leading-relaxed max-w-4xl">
+                        ให้ $A$ และ $B$ เป็นเซตใดๆ <b>ผลคูณคาร์ทีเซียน (Cartesian Product)</b> ของเซต $A$ และเซต $B$ เขียนแทนด้วย $A \times B$ คือ เซตของคู่อันดับ $(a, b)$ ทั้งหมด โดยที่สมาชิกตัวหน้า $a$ มาจากเซต $A$ และสมาชิกตัวหลัง $b$ มาจากเซต $B$ นิยามได้ดังนี้:
+                    </p>
+                    <div class="font-mono text-indigo-600 bg-white w-full p-4 rounded-xl text-center shadow-xs inline-block min-w-[320px] border border-slate-200">
+                        $$A \times B = \{(a, b)  \; \colon \;  a \in A \wedge b \in B\}$$
+                    </div>
+                </div>
+
+                <hr class="border-slate-200">
+
+                <!-- 2. Definition of Relation -->
+                <div class="space-y-3">
+                    <h3 class="text-lg font-bold text-slate-900 flex items-center">
+                        <i class="fa-solid fa-link text-indigo-500 mr-2.5"></i>2. นิยามของความสัมพันธ์ (Definition of Relation)
+                    </h3>
+                    <div class="text-sm text-slate-600 leading-relaxed space-y-2">
+                        <p>
+                            <b>ความสัมพันธ์ทวิภาค (Binary Relation)</b> $R$ จากเซต $A$ ไปยังเซต $B$ คือ สับเซตใดๆ ของผลคูณคาร์ทีเซียน $A \times B$ (เขียนแทนด้วย $R \subseteq A \times B$) ตัวอย่างความสัมพันธ์ทั่วไป เช่น:
+                        </p>
+                        <div class="pl-6 bg-white p-4 rounded-xl border border-slate-200 space-y-1.5 font-mono text-xs text-indigo-600">
+                            <div class="flex items-start"><span class="text-slate-400 mr-2">•</span> <span>$R_1 = \{(5, A), (1, C), (3, D)\}$ เป็นความสัมพันธ์จากเซต $\{1, 2, 3, 4, 5\}$ ไปยัง $\{A, B, C, D\}$</span></div>
+                            <div class="flex items-start"><span class="text-slate-400 mr-2">•</span> <span>$R_2 = \{(PSCP, A), (ICS, C), (DM, A)\}$ เป็นความสัมพันธ์จากเซตของรายวิชาไปยังเซตของผลการเรียน</span></div>
+                        </div>
+                        <p class="text-xs text-slate-500 pt-1">
+                            💡 ในกรณีที่ $A = B$ เราจะเรียกความสัมพันธ์ $R$ จาก $A$ ไป $A$ ว่าเป็น <b>"ความสัมพันธ์บนเซต $A$" (Relation on set $A$)</b>
+                        </p>
+                    </div>
+                </div>
+
+                <hr class="border-slate-200">
+
+                <!-- 3. Examples of Relation -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-bold text-slate-900 flex items-center">
+                        <i class="fa-solid fa-lightbulb text-emerald-600 mr-2.5"></i>3. ตัวอย่างของความสัมพันธ์ (Examples of Relation)
+                    </h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        ในทางคณิตศาสตร์และวิทยาการคอมพิวเตอร์ เรามักกำหนดเงื่อนไขเพื่อให้เกิดเซตความสัมพันธ์ที่มีประโยชน์ ตัวอย่างเช่น:
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        
+                        <!-- 1. Less Than Relation -->
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-xs space-y-2">
+                            <span class="font-bold text-slate-900 flex items-center text-sm">
+                                <i class="fa-solid fa-arrow-down-short-wide mr-2 text-indigo-500"></i> ความสัมพันธ์ "น้อยกว่า" (Less Than)
+                            </span>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                นิยามโดย $R = \{(a, b) \in A \times B  \; \colon \; a < b\}$ นิยมใช้ในการจัดระเบียบข้อมูลและการเปรียบเทียบค่า
+                            </p>
+                            <div class="bg-slate-50 p-2.5 rounded-lg text-xs font-mono text-indigo-600">
+                                สมมติ $A = \{1, 2, 3\}$ และ $B = \{2, 3\}$ <br>
+                                จะได้ $R = \{(1, 2), (1, 3), (2, 3)\}$
+                            </div>
+                        </div>
+
+                        <!-- 2. Divided By Relation -->
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-xs space-y-2">
+                            <span class="font-bold text-slate-900 flex items-center text-sm">
+                                <i class="fa-solid fa-calculator mr-2 text-indigo-500"></i> ความสัมพันธ์ "หารลงตัว" (Divided by)
+                            </span>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                นิยามโดย $R = \{(a, b) \in A \times B \; \colon \; a \mid b \}$ (เขียนแทนด้วยสัญลักษณ์ $a \mid b$)
+                            </p>
+                            <div class="bg-slate-50 p-2.5 rounded-lg text-xs font-mono text-indigo-600">
+                                สมมติ $A = \{2, 3\}$ และ $B = \{4, 6, 9\}$ <br>
+                                จะได้ $R = \{(2, 4), (2, 6), (3, 6), (3, 9)\}$
+                            </div>
+                        </div>
+
+                        <!-- 3. Square Relation -->
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-xs space-y-2">
+                            <span class="font-bold text-slate-900 flex items-center text-sm">
+                                <i class="fa-solid fa-superscript mr-2 text-indigo-500"></i> ความสัมพันธ์ "กำลังสอง" (Square of)
+                            </span>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                นิยามโดย $R = \{(a, b) \in A \times B  \; \colon \;  b = a^2\}$ เป็นตัวอย่างความสัมพันธ์ที่ฟังก์ชันก็เป็นสับเซตของมันด้วย
+                            </p>
+                            <div class="bg-slate-50 p-2.5 rounded-lg text-xs font-mono text-indigo-600">
+                                สมมติ $A = \{2, 3, 4\}$ และ $B = \{4, 9, 10\}$ <br>
+                                จะได้ $R = \{(2, 4), (3, 9)\}$
+                            </div>
+                        </div>
+
+                        <!-- 4. Social Network Relation -->
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-xs space-y-2">
+                            <span class="font-bold text-slate-900 flex items-center text-sm">
+                                <i class="fa-solid fa-users mr-2 text-indigo-500"></i> เครือข่ายสังคม (Social Network Relation)
+                            </span>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                ประยุกต์ใช้ในโครงสร้าง Graph data เช่น ความสัมพันธ์แบบทิศทางเดี่ยว "กดติดตาม (Following)" บนแพลตฟอร์ม X หรือ IG
+                            </p>
+                            <div class="bg-slate-50 p-2.5 rounded-lg text-xs font-mono text-indigo-600">
+                                สมมติ $A = \{\text{User1}, \text{User2}\}$ <br>
+                                จะได้ $R = \{(\text{User1}, \text{User2})\}$ (User1 ติดตาม User2)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="border-slate-200">
+
+                <!-- 4. Interactive Panel -->
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900 flex items-center">
+                            <i class="fa-solid fa-sliders text-indigo-500 mr-2.5"></i>4. แผงควบคุมและจำลองรูปภาพความสัมพันธ์ (Interactive Panel)
+                        </h3>
+                        <p class="text-xs text-slate-500 mt-1">ทดลองป้อนสมาชิกของเซต A, เซต B และกำหนดคู่อันดับความสัมพันธ์เพื่อวาดไดอะแกรมการจับคู่แบบเรียลไทม์</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                        <!-- Left Controls Inputs -->
+                        <div class="lg:col-span-4 space-y-4 bg-white p-5 rounded-xl border border-slate-200 shadow-xs">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">สมาชิกเซต A (คั่นด้วยคอมมา):</label>
+                                <input id="interactive-setA" type="text" value="1, 2, 3" oninput="updateInteractiveDiagram()" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:border-indigo-500 transition">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">สมาชิกเซต B (คั่นด้วยคอมมา):</label>
+                                <input id="interactive-setB" type="text" value="A, B, C" oninput="updateInteractiveDiagram()" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-800 focus:outline-none focus:border-indigo-500 transition">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">ระบุคู่อันดับความสัมพันธ์ $R$:</label>
+                                <textarea id="interactive-relation" rows="3" oninput="updateInteractiveDiagram()" placeholder="ตัวอย่าง: (1,A), (2,B), (3,B)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-1.5 text-xs font-mono text-slate-800 focus:outline-none focus:border-indigo-500 transition">(1,A), (2,B), (3,B), (3,C)</textarea>
+                            </div>
+                            <div class="pt-2">
+                                <button onclick="clearInteractiveInputs()" class="w-full bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium py-2 rounded-lg text-xs transition cursor-pointer">
+                                    <i class="fa-solid fa-trash-can mr-1.5"></i> ล้างข้อมูลเซต
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Right Diagram Viewer -->
+                        <div class="lg:col-span-8 bg-slate-900 text-slate-100 rounded-2xl p-6 shadow-md border border-slate-800 flex flex-col justify-between items-center min-h-[340px]">
+                            <div class="w-full flex justify-between items-center border-b border-slate-800 pb-2 mb-4">
+                                <span class="text-xs font-bold uppercase tracking-wider text-indigo-400"><i class="fa-regular fa-image mr-1"></i> Live Diagram Viewer</span>
+                                <span class="text-[11px] text-slate-400 font-mono" id="diagram-stats"></span>
+                            </div>
+                            
+                            <!-- SVG Rendering Area -->
+                            <div class="w-full overflow-x-auto flex justify-center bg-slate-950 rounded-xl p-4 border border-slate-800/60 shadow-inner">
+                                <svg id="interactive-svg" width="460" height="240" class="overflow-visible">
+                                    <defs>
+                                        <marker id="arrow-indigo" viewBox="0 0 10 10" refX="18" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                            <path d="M 0 1 L 10 5 L 0 9 z" fill="#6366f1"/>
+                                        </marker>
+                                    </defs>
+                                    <!-- Dynamic elements injected here -->
+                                    <g id="svg-links"></g>
+                                    <g id="svg-nodes-A"></g>
+                                    <g id="svg-nodes-B"></g>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- SECTION 2: Relation Properties -->
+            <section id="sec-properties" class="tab-content hidden space-y-12">
+                
+                <!-- Header Title -->
+                <div class="border-b border-slate-200 pb-6">
+                    <div class="flex items-center space-x-3">
+                        <span class="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-100 font-bold text-emerald-700">2</span>
+                        <h2 class="text-2xl font-bold text-slate-900 tracking-tight">คุณสมบัติและการแทนความสัมพันธ์ (Relation Properties & Representations)</h2>
+                    </div>
+                </div>
+
+                <!-- 1. Properties Expanded Subsections -->
+                <div class="space-y-6">
+                    <h3 class="text-lg font-bold text-slate-900 flex items-center border-b border-slate-100 pb-2">
+                        <i class="fa-solid fa-list-check text-emerald-600 mr-2.5"></i>1. เจาะลึกคุณสมบัติพื้นฐาน 4 ประการบนเซต (4 Core Properties)
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 gap-6">
+                        <!-- Subsection 1.1: Reflexive -->
+                        <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-xs space-y-3">
+                            <div class="flex items-center justify-between flex-wrap gap-2">
+                                <h4 class="text-base font-bold text-slate-900 flex items-center">
+                                    <span class="inline-block px-2.5 py-1 text-xs font-bold rounded bg-blue-100 text-blue-800 mr-2">1.1 คุณสมบัติการสะท้อน</span> (Reflexive Property)
+                                </h4>
+                                <div class="font-mono text-sm bg-blue-50 text-blue-700 px-3 py-1 rounded-lg border border-blue-100">
+                                    $$\forall a \in A, (a, a) \in R$$
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                <b>คำอธิบาย:</b> ความสัมพันธ์ $R$ บนเซต $A$ จะมีคุณสมบัติการสะท้อน ก็ต่อเมื่อสมาชิก <b>ทุกตัว</b> ในเซต $A$ ต้องมีความสัมพันธ์กับตัวมันเอง หากมีสมาชิกแม้เพียงตัวเดียวที่ไม่มีคู่อันดับตัวมันเองซ้ำกัน จะถือว่าไม่เป็นความสัมพันธ์สะท้อน
+                            </p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-1">
+                                <div class="bg-emerald-50 border border-emerald-100 p-3 rounded-lg text-emerald-800">
+                                    <span class="font-bold block text-emerald-900 mb-0.5">✅ ตัวอย่างที่เป็น:</span>
+                                    ให้ $A = \{1, 2\}$ และ $R = \{(1,1), (2,2), (1,2)\}$ <br>
+                                    (มีครบทั้ง $(1,1)$ และ $(2,2)$)
+                                </div>
+                                <div class="bg-rose-50 border border-rose-100 p-3 rounded-lg text-rose-800">
+                                    <span class="font-bold block text-rose-900 mb-0.5">❌ ตัวอย่างที่ไม่เป็น:</span>
+                                    ให้ $A = \{1, 2\}$ และ $R = \{(1,1), (1,2)\}$ <br>
+                                    (ขาดคู่อันดับ $(2,2)$ ไป)
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Subsection 1.2: Symmetric -->
+                        <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-xs space-y-3">
+                            <div class="flex items-center justify-between flex-wrap gap-2">
+                                <h4 class="text-base font-bold text-slate-900 flex items-center">
+                                    <span class="inline-block px-2.5 py-1 text-xs font-bold rounded bg-purple-100 text-purple-800 mr-2">1.2 คุณสมบัติการสมมาตร</span> (Symmetric Property)
+                                </h4>
+                                <div class="font-mono text-sm bg-purple-50 text-purple-700 px-3 py-1 rounded-lg border border-purple-100">
+                                    $$\forall a,b \in A, ((a, b) \in R \rightarrow (b, a) \in R)$$
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                <b>คำอธิบาย:</b> หมายความว่า ถ้ามีคู่อันดับ $(a, b)$ ปรากฏอยู่ในความสัมพันธ์ $R$ แล้ว คู่อันดับสลับหน้าหลังอย่าง $(b, a)$ ก็จะต้องปรากฏอยู่ใน $R$ ด้วยเช่นกัน เป็นการเชื่อมโยงข้อมูลแบบสองทิศทาง (Two-way Connection) 
+                            </p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-1">
+                                <div class="bg-emerald-50 border border-emerald-100 p-3 rounded-lg text-emerald-800">
+                                    <span class="font-bold block text-emerald-900 mb-0.5">✅ ตัวอย่างที่เป็น:</span>
+                                    ให้ $R = \{(1,2), (2,1), (3,3)\}$ <br>
+                                    (เมื่อมี $(1,2)$ ก็มี $(2,1)$ ส่วน $(3,3)$ สลับแล้วได้ตัวเดิม)
+                                </div>
+                                <div class="bg-rose-50 border border-rose-100 p-3 rounded-lg text-rose-800">
+                                    <span class="font-bold block text-rose-900 mb-0.5">❌ ตัวอย่างที่ไม่เป็น:</span>
+                                    ให้ $R = \{(1,2), (2,1), (2,3)\}$ <br>
+                                    (มี $(2,3)$ แต่กลับไม่มีคู่อันดับสวนกลับอย่าง $(3,2)$)
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Subsection 1.3: Antisymmetric -->
+                        <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-xs space-y-3">
+                            <div class="flex items-center justify-between flex-wrap gap-2">
+                                <h4 class="text-base font-bold text-slate-900 flex items-center">
+                                    <span class="inline-block px-2.5 py-1 text-xs font-bold rounded bg-amber-100 text-amber-800 mr-2">1.3 คุณสมบัติการต้านสมมาตร</span> (Antisymmetric Property)
+                                </h4>
+                                <div class="font-mono text-sm bg-amber-50 text-amber-700 px-3 py-1 rounded-lg border border-amber-100">
+                                    $$\forall a,b \in A, (((a,b) \in R \wedge (b,a) \in R) \rightarrow a = b)$$
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                <b>คำอธิบาย:</b> เงื่อนไขนี้ระบุว่า ห้ามมีคู่อันดับชี้ไปกลับสวนทางกันระหว่างสมาชิกที่ <i>ต่างกัน</i> เด็ดขาด ($\forall a \neq b$) คู่อันดับที่จะสามารถอยู่ได้ทั้งขาไปและขากลับพร้อมกันมีได้เพียงแค่กรณีตัวมันเองคู่กับตัวมันเองเท่านั้น ($a = b$) เช่น ความสัมพันธ์ "น้อยกว่าหรือเท่ากับ ($\le$)"
+                            </p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-1">
+                                <div class="bg-emerald-50 border border-emerald-100 p-3 rounded-lg text-emerald-800">
+                                    <span class="font-bold block text-emerald-900 mb-0.5">✅ ตัวอย่างที่เป็น:</span>
+                                    ให้ $R = \{(1,2), (2,3), (1,1)\}$ <br>
+                                    (ไม่มีโหนกคู่ใดที่มีทางไปกลับสวนกันเลยนอกจากลูปตัวเอง)
+                                </div>
+                                <div class="bg-rose-50 border border-rose-100 p-3 rounded-lg text-rose-800">
+                                    <span class="font-bold block text-rose-900 mb-0.5">❌ ตัวอย่างที่ไม่เป็น:</span>
+                                    ให้ $R = \{(1,2), (2,1), (2,3)\}$ <br>
+                                    (เนื่องจากมีทั้ง $(1,2)$ และ $(2,1)$ ซึ่งขัดแย้งเพราะ $1 \neq 2$)
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Subsection 1.4: Transitive -->
+                        <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-xs space-y-3">
+                            <div class="flex items-center justify-between flex-wrap gap-2">
+                                <h4 class="text-base font-bold text-slate-900 flex items-center">
+                                    <span class="inline-block px-2.5 py-1 text-xs font-bold rounded bg-rose-100 text-rose-800 mr-2">1.4 คุณสมบัติการถ่ายทอด</span> (Transitive Property)
+                                </h4>
+                                <div class="font-mono text-sm bg-rose-50 text-rose-700 px-3 py-1 rounded-lg border border-rose-100">
+                                    $$\forall a,b,c \in A, (((a,b) \in R \wedge (b,c) \in R) \rightarrow (a,c) \in R)$$
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                <b>คำอธิบาย:</b> โครงสร้างสะพานเชื่อมเชื่อมโยงข้อมูล หากมีความสัมพันธ์จาก $a$ ไปหา $b$ และมีช่วงต่อจาก $b$ ไปหา $c$ แล้วละก็ ระบบจะต้องสร้าง "ทางลัด" เชื่อมตรงจากตัวแรกสุด $a$ ข้ามไปหาตัวท้ายสุด $c$ เสมอ เช่นความสัมพันธ์ "เป็นบรรพบุรุษของ" หรือ "ยาวกว่า"
+                            </p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-1">
+                                <div class="bg-emerald-50 border border-emerald-100 p-3 rounded-lg text-emerald-800">
+                                    <span class="font-bold block text-emerald-900 mb-0.5">✅ ตัวอย่างที่เป็น:</span>
+                                    ให้ $R = \{(1,2), (2,3), (1,3)\}$ <br>
+                                    (มี $1 \rightarrow 2$ และ $2 \rightarrow 3$ แล้วมีทางลัดยิงตรง $1 \rightarrow 3$)
+                                </div>
+                                <div class="bg-rose-50 border border-rose-100 p-3 rounded-lg text-rose-800">
+                                    <span class="font-bold block text-rose-900 mb-0.5">❌ ตัวอย่างที่ไม่เป็น:</span>
+                                    ให้ $R = \{(1,2), (2,3)\}$ <br>
+                                    (มีตัวส่งต่อทอดแต่ขาดคู่อันดับลัดหน้าหลังสุดอย่าง $(1,3)$)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="border-slate-200">
+
+                <!-- 2. Zero-One Matrix Analysis -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-bold text-slate-900 flex items-center">
+                        <i class="fa-solid fa-table-cells text-emerald-600 mr-2.5"></i>2. การแทนด้วยเมทริกซ์ศูนย์-หนึ่ง ($M_R$) และการวิเคราะห์ค่า
+                    </h3>
+                    
+                    <div class="border border-slate-200 rounded-xl overflow-hidden shadow-xs grid grid-cols-1 lg:grid-cols-3 bg-white">
+                        <div class="p-5 bg-slate-50 border-r border-slate-200 flex flex-col justify-between">
+                            <div class="space-y-2">
+                                <h4 class="font-bold text-slate-800 text-xs uppercase tracking-wider">กฎการสังเกตจากเมทริกซ์:</h4>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    <strong>• สะท้อน:</strong> แนวทแยงมุมหลักต้องเป็นเลข $1$ ทั้งหมด<br>
+                                    <strong>• สมมาตร:</strong> สมาชิกข้ามแนวทแยงเหมือนกัน ($m_{ij} = m_{ji}$)<br>
+                                    <strong>• ต้านสมมาตร:</strong> ถ้า $m_{ij}=1$ ($i \neq j$) แล้ว $m_{ji}$ ต้องเป็น $0$
+                                </p>
+                            </div>
+                            <button onclick="resetMatrixGrid()" class="w-full text-xs bg-white border border-slate-300 rounded-lg px-3 py-1.5 hover:bg-slate-50 font-medium text-slate-700 cursor-pointer mt-4">
+                                <i class="fa-solid fa-rotate-left mr-1"></i> เคลียร์ค่าเมทริกซ์
+                            </button>
+                        </div>
+                        <div class="p-5 lg:col-span-2 flex flex-col sm:flex-row items-center justify-around gap-6 bg-white">
+                            <div class="grid grid-cols-3 gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200" id="matrix-grid-container"></div>
+                            <div class="text-xs space-y-2 bg-indigo-50/60 p-4 rounded-xl border border-indigo-100 w-full sm:w-52 font-mono">
+                                <span class="font-bold text-indigo-950 block border-b border-indigo-200 pb-1 mb-1">🔎 ผลวิเคราะห์เมทริกซ์:</span>
+                                <div class="flex justify-between"><span>สะท้อน:</span> <span id="m-ref" class="font-bold">-</span></div>
+                                <div class="flex justify-between"><span>สมมาตร:</span> <span id="m-sym" class="font-bold">-</span></div>
+                                <div class="flex justify-between"><span>ต้านสมมาตร:</span> <span id="m-anti" class="font-bold">-</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="border-slate-200">
+
+                <!-- 3. Digraph Model Visualizer -->
+                <div class="space-y-4">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <h3 class="text-lg font-bold text-slate-900 flex items-center">
+                            <i class="fa-solid fa-circle-dot text-emerald-600 mr-2.5"></i>3. โครงสร้างคุณสมบัติบนกราฟระบุทิศทาง (Digraph Showcase)
+                        </h3>
+                        <div class="flex flex-wrap gap-1 bg-slate-200/70 p-1 rounded-lg">
+                            <button onclick="switchDigraphModel('reflexive')" id="btn-model-reflexive" class="model-tab-btn px-2.5 py-1 text-xs font-semibold rounded-md transition duration-150 bg-indigo-600 text-white shadow-xs">สะท้อน</button>
+                            <button onclick="switchDigraphModel('symmetric')" id="btn-model-symmetric" class="model-tab-btn px-2.5 py-1 text-xs font-semibold rounded-md transition duration-150 text-slate-600 hover:text-slate-900">สมมาตร</button>
+                            <button onclick="switchDigraphModel('antisymmetric')" id="btn-model-antisymmetric" class="model-tab-btn px-2.5 py-1 text-xs font-semibold rounded-md transition duration-150 text-slate-600 hover:text-slate-900">ปฏิสมมาตร</button>
+                            <button onclick="switchDigraphModel('transitive')" id="btn-model-transitive" class="model-tab-btn px-2.5 py-1 text-xs font-semibold rounded-md transition duration-150 text-slate-600 hover:text-slate-900">ถ่ายทอด</button>
+                        </div>
+                    </div>
+
+                    <div class="border border-slate-200 rounded-xl overflow-hidden shadow-xs grid grid-cols-1 lg:grid-cols-12 bg-white">
+                        <div class="lg:col-span-5 p-5 space-y-3 text-xs bg-slate-50/50 flex flex-col justify-center">
+                            <h4 id="model-title" class="font-bold text-slate-900 text-sm"></h4>
+                            <div id="model-formula" class="font-mono bg-white p-2.5 rounded-lg border border-slate-200 text-indigo-600"></div>
+                            <p id="model-desc" class="text-slate-600 leading-relaxed"></p>
+                            <div id="model-pairs" class="font-mono font-bold bg-indigo-50 text-indigo-800 p-2.5 rounded-lg border border-indigo-100"></div>
+                            <div id="model-visual-rule" class="text-emerald-700 bg-emerald-50 p-2.5 rounded-lg border border-emerald-100 font-medium"></div>
+                        </div>
+                        <div class="lg:col-span-7 flex justify-center bg-slate-900 p-6 border-l border-slate-200/10">
+                            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 shadow-inner w-full flex justify-center">
+                                <svg id="model-showcase-svg" width="320" height="240" class="overflow-visible">
+                                    <defs>
+                                        <marker id="arrow-model-blue" viewBox="0 0 10 10" refX="17" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                                            <path d="M 0 1 L 10 5 L 0 9 z" fill="#6366f1"/>
+                                        </marker>
+                                    </defs>
+                                    <g id="model-svg-edges"></g>
+                                    <g id="model-svg-nodes"></g>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 3: Equivalence Relation -->
+            <section id="sec-equivalence" class="tab-content hidden space-y-12">
+                
+                <!-- Header Title -->
+                <div class="border-b border-slate-200 pb-6">
+                    <div class="flex items-center space-x-3">
+                        <span class="flex h-8 w-8 items-center justify-center rounded-full bg-indigo-100 font-bold text-indigo-700"><i class="fa-solid fa-certificate text-xs"></i></span>
+                        <h2 class="text-2xl font-bold text-slate-900 tracking-tight">ความสัมพันธ์สมมูล (Equivalence Relation)</h2>
+                    </div>
+                </div>
+
+                <!-- 1. Definition and Setup -->
+                <div class="space-y-6">
+                    <div class="space-y-3">
+                        <h3 class="text-lg font-bold text-slate-900 flex items-center">
+                            <i class="fa-solid fa-book mr-2"></i> 1. นิยามของความสัมพันธ์สมมูล (Definition of Equivalence Relation)
+                        </h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            ให้ $R$ เป็นความสัมพันธ์บนเซตไม่ว่าง $A$ (นั่นคือ $R \subseteq A \times A$) เราจะเรียก $R$ ว่าเป็น <b>ความสัมพันธ์สมมูล</b> ก็ต่อเมื่อ $R$ มีสมบัติครบถ้วนทั้ง 3 ประการดังต่อไปนี้สำหรับทุกๆ สมาชิกในเซต:
+                        </p>
+                        <ul class="text-sm text-slate-600 pl-6 space-y-1 list-disc">
+                            <li><b>สมบัติการสะท้อน (Reflexive):</b> สำหรับทุกๆ $a \in A$ จะได้ว่า $(a, a) \in R$ (หรือ $a R a$)</li>
+                            <li><b>สมบัติการสมมาตร (Symmetric):</b> สำหรับทุกๆ $a, b \in A$ ถ้า $(a, b) \in R$ แล้วจะได้ว่า $(b, a) \in R$ (ถ้า $a R b$ แล้ว $b R a$)</li>
+                            <li><b>สมบัติการถ่ายทอด (Transitive):</b> สำหรับทุกๆ $a, b, c \in A$ ถ้า $(a, b) \in R$ และ $(b, c) \in R$ แล้วจะได้ว่า $(a, c) \in R$ (ถ้า $a R b$ และ $b R c$ แล้ว $a R c$)</li>
+                        </ul>
+                    </div>
+                        <hr class="border-slate-200">
+                    <div class="space-y-3">
+                        <h3 class="text-lg font-bold text-slate-900 flex items-center">
+                            <i class="fa-solid fa-layer-group mr-2"></i> 2. นิยามของคลาสสมมูล (Definition of Equivalence Class)
+                        </h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                                ให้ $\sim$ เป็นความสัมพันธ์สมมูลบนเซต $A$ และให้ $a \in A$ <b>คลาสสมมูล (Equivalence Class)</b> ของ $a$ เขียนแทนด้วยสัญลักษณ์ $[a]_{\sim}$ คือเซตของสมาชิกทุกตัวใน $A$ ที่มีความสัมพันธ์ $R$ กับสมาชิก $a$ นิยามเชิงสัญลักษณ์ได้ดังนี้:
+                        </p>
+                        <div class="font-mono text-indigo-600 bg-slate-50 w-full p-3 rounded-lg text-center border border-slate-200 text-xs">
+                                $$[a]_{\sim} = \{x \in A \; \colon \; (x, a) \in R\}$$
+                        </div>
+                        <p class="text-xs text-slate-500 pt-1">
+                            💡 ข้อสังเกต: คลาสสมมูลสองคลาสใดๆ $[a]$ และ $[b]$ จะมีลักษณะที่แยกขาดจากกันอย่างเด็ดขาด คือเป็นเซตที่เหมือนกันทุกประการ ($[a] = $[b]) หรือไม่มีส่วนร่วมกันเลย ($[a] \cap [b] = \emptyset$)
+                        </p>
+                    </div>
+                    <hr class="border-slate-200">
+
+                    <!-- Modulo Control Toolbar -->
+                    <div class="bg-white border border-slate-200 p-4 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs mt-6">
+                        <div class="flex items-center space-x-4">
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-500 mb-1 uppercase tracking-wider">ตัวหาร Modulo ($m$):</label>
+                                <input id="interactive-mod-m" type="number" min="2" max="4" value="3" onchange="visualizeModuloRelation()" class="w-16 px-2 py-1 bg-slate-50 border border-slate-300 rounded-lg text-center font-bold text-indigo-600 focus:outline-none focus:border-indigo-500">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-500 mb-1 uppercase tracking-wider">ขนาดเซต $A$ (1 ถึง N):</label>
+                                <input id="interactive-mod-max" type="number" min="3" max="8" value="6" onchange="visualizeModuloRelation()" class="w-16 px-2 py-1 bg-slate-50 border border-slate-300 rounded-lg text-center font-bold text-indigo-600 focus:outline-none focus:border-indigo-500">
+                            </div>
+                        </div>
+                        <div class="text-xs text-slate-500 max-w-md flex items-start space-x-2">
+                            <i class="fa-solid fa-lightbulb text-amber-500 mt-0.5 shrink-0"></i>
+                            <p>สมาชิกที่อยู่ในคลาสสมมูลเดียวกัน (เศษเหลือเท่ากัน) จะเชื่อมโยงถึงกันหมด เกิดเป็นโครงสร้างบล็อกเมทริกซ์และกลุ่มโหนดแยกขาดออกจากกันชัดเจน</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Interactive Results Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+                    <!-- Equivalence Classes List -->
+                    <div class="border border-slate-200 rounded-xl p-5 bg-white shadow-xs flex flex-col justify-between">
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider mb-3 text-indigo-600 flex items-center">
+                                <i class="fa-solid fa-layer-group mr-2"></i>1. คลาสสมมูล (Equivalence Classes)
+                            </h4>
+                            <div id="mod-classes-list" class="space-y-2 font-mono text-xs"></div>
+                        </div>
+                        <div class="text-[11px] text-emerald-700 bg-emerald-50 p-2.5 rounded-lg mt-4 border border-emerald-100 leading-normal">
+                            💡 สมาชิกทุกคลาสรวมกันจะได้เซตต้นแบบพอดี และไม่มีคลาสใดซ้อนทับกัน ($A_i \cap A_j = \emptyset$) เรียกว่าเกิด <b>Partition</b>
+                        </div>
+                    </div>
+
+                    <!-- Matrix Block Viewer -->
+                    <div class="border border-slate-200 rounded-xl p-5 bg-white shadow-xs flex flex-col items-center justify-center">
+                        <div class="w-full">
+                            <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider mb-3 text-indigo-600 flex items-center">
+                                <i class="fa-solid fa-border-all mr-2"></i>2. ลักษณะบล็อกเมทริกซ์สมบูรณ์
+                            </h4>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 font-mono text-xs shadow-inner">
+                            <div id="mod-matrix-container" class="grid gap-1"></div>
+                        </div>
+                    </div>
+
+                    <!-- Digraph Cluster View -->
+                    <div class="border border-slate-200 rounded-xl p-5 bg-slate-900 shadow-xs flex flex-col items-center justify-center border-slate-800">
+                        <div class="w-full text-left border-b border-slate-800 pb-2 mb-3">
+                            <h4 class="font-bold text-indigo-400 text-xs uppercase tracking-wider flex items-center">
+                                <i class="fa-solid fa-diagram-project mr-2"></i>3. ไดอะแกรมกลุ่มก้อน (Digraph Partition)
+                            </h4>
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-xl border border-slate-800/60 shadow-inner w-full flex justify-center">
+                            <svg id="mod-digraph-svg" width="280" height="220" class="overflow-visible">
+                                <defs>
+                                    <marker id="arrow-mod-forward" viewBox="0 0 10 10" refX="16" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                                        <path d="M 0 1 L 10 5 L 0 9 z" fill="#6366f1"/>
+                                    </marker>
+                                </defs>
+                                <g id="mod-svg-bg-clusters"></g>
+                                <g id="mod-svg-edges"></g>
+                                <g id="mod-svg-nodes"></g>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 4: Application -->
+            <section id="sec-applications" class="tab-content hidden space-y-12">
+                
+                <!-- Header Title -->
+                <div class="border-b border-slate-200 pb-6">
+                    <div class="flex items-center space-x-3">
+                        <span class="flex h-8 w-8 items-center justify-center rounded-full bg-amber-100 font-bold text-amber-700">4</span>
+                        <h2 class="text-2xl font-bold text-slate-900 tracking-tight">การประยุกต์ใช้งาน (Application: n-ary Relation & Database)</h2>
+                    </div>
+                </div>
+
+                <!-- Main Grid Info -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    
+                    <!-- Theoretical Concept Info -->
+                    <div class="lg:col-span-4 space-y-4">
+                        <div class="space-y-2">
+                            <h3 class="text-lg font-bold text-slate-900 flex items-center">
+                                <i class="fa-solid fa-database text-amber-600 mr-2.5"></i>ความสัมพันธ์แบบ n-ary
+                            </h3>
+                            <p class="text-sm text-slate-600 leading-relaxed">
+                                ในระบบจริง ความสัมพันธ์มักไม่ได้เกิดระหว่างเซตสองเซตเท่านั้น แต่เกิดขึ้นกับชุดของหลายเซต $A_1 \times A_2 \times \dots \times A_n$ ซึ่งเป็นหัวใจหลักในสถาปัตยกรรม <b>ฐานข้อมูลเชิงสัมพันธ์ (Relational Database)</b>
+                            </p>
+                        </div>
+                        <div class="p-4 bg-amber-50 rounded-xl border border-amber-200 text-xs text-amber-900 font-medium space-y-1.5 shadow-xs">
+                            <span class="flex items-center font-bold text-amber-950 mb-1">
+                                <i class="fa-solid fa-key mr-2 text-amber-600"></i>กฎคีย์หลัก (Primary Key Constraint)
+                            </span>
+                            <p class="leading-relaxed">
+                                ฟิลด์หรือแอตทริบิวต์ที่ถูกเลือกค่าในโดเมนจะต้องห้ามซ้ำกันโดยเด็ดขาดในแต่ละทูเพิล (Tuple) เพื่อให้สามารถสืบค้น ค้นหา หรือลบข้อมูลในระเบียนนั้นได้อย่างไม่คลุมเครือ
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Database Grid Table -->
+                    <div class="lg:col-span-8 space-y-4">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="font-bold text-slate-500 uppercase tracking-wider"><i class="fa-solid fa-table mr-1 text-slate-400"></i> ตารางข้อมูลจำลองความสัมพันธ์ R (องศา/Degree = 3)</span>
+                        </div>
+                        
+                        <!-- Table Wrapper -->
+                        <div class="overflow-x-auto border border-slate-200 rounded-xl bg-white shadow-xs">
+                            <table class="w-full text-left text-sm border-collapse">
+                                <thead class="bg-slate-50 border-b border-slate-200 text-xs font-bold uppercase text-slate-600">
+                                    <tr>
+                                        <th class="px-4 py-3"><i class="fa-solid fa-id-card text-amber-500 mr-1.5"></i>รหัสนักศึกษา (Primary Key)</th>
+                                        <th class="px-4 py-3">ชื่อ-นามสกุล</th>
+                                        <th class="px-4 py-3">สาขาวิชา</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="db-table-body" class="divide-y divide-slate-100 font-mono text-xs">
+                                    <!-- Dynamic Rows Injected Here -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Data Ingestion Form Panel -->
+                        <div class="bg-white p-4 border border-slate-200 rounded-xl grid grid-cols-1 sm:grid-cols-4 gap-3 items-end shadow-xs">
+                            <div>
+                                <label class="block text-[11px] font-semibold mb-1 text-slate-500 uppercase">รหัส:</label>
+                                <input id="db-input-id" type="text" placeholder="660101" class="w-full text-xs border border-slate-300 bg-slate-50 rounded-lg p-2 focus:outline-none focus:border-amber-500 transition font-mono">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-semibold mb-1 text-slate-500 uppercase">ชื่อ:</label>
+                                <input id="db-input-name" type="text" placeholder="สมชาย" class="w-full text-xs border border-slate-300 bg-slate-50 rounded-lg p-2 focus:outline-none focus:border-amber-500 transition">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-semibold mb-1 text-slate-500 uppercase">สาขา:</label>
+                                <input id="db-input-major" type="text" placeholder="IT" class="w-full text-xs border border-slate-300 bg-slate-50 rounded-lg p-2 focus:outline-none focus:border-amber-500 transition font-mono">
+                            </div>
+                            <button onclick="insertDatabaseTuple()" class="bg-amber-600 hover:bg-amber-500 text-white font-medium py-2 px-3 rounded-lg text-xs transition cursor-pointer shadow-xs flex items-center justify-center">
+                                <i class="fa-solid fa-plus mr-1.5"></i> เพิ่มแถวข้อมูล
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="bg-slate-900 text-slate-400 text-xs py-6 border-t border-slate-800 mt-auto">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
+                <p class="font-semibold text-slate-300">ระบบเว็บสื่อการสอนจำลองเรื่องความสัมพันธ์แบบ Interactive (4 Modules)</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        function switchTab(targetId) {
+            document.querySelectorAll('.tab-content').forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById(targetId).classList.remove('hidden');
+
+            const navButtons = document.querySelectorAll('#sidebar-nav button');
+            navButtons.forEach(btn => {
+                if (btn.id === `btn-${targetId}`) {
+                    btn.className = "w-full flex items-center space-x-3 rounded-xl px-4 py-3 text-sm font-medium transition duration-200 text-white bg-indigo-600 shadow-sm";
+                } else {
+                    btn.className = "w-full flex items-center space-x-3 rounded-xl px-4 py-3 text-sm font-medium transition duration-200 text-slate-400 hover:bg-slate-800 hover:text-slate-100";
+                }
+            });
+
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                window.MathJax.typesetPromise();
+            }
+
+            if (targetId === 'sec-equivalence') {
+                visualizeModuloRelation();
+            } else if (targetId === 'sec-properties') {
+                switchDigraphModel('reflexive');
+            }
+        }
+
+        let databaseRecords = [
+            { id: "660101", name: "พีระพงษ์", major: "IT" },
+            { id: "660102", name: "อนัญญา", major: "IT" },
+            { id: "660103", name: "ธนกร", major: "DSBA" }
+        ];
+
+        let matrixState = [
+            [1, 0, 0],
+            [0, 1, 0],
+            [0, 0, 1]
+        ];
+
+        function clearInteractiveInputs() {
+            document.getElementById('interactive-setA').value = "";
+            document.getElementById('interactive-setB').value = "";
+            document.getElementById('interactive-relation').value = "";
+            updateInteractiveDiagram();
+        }
+
+        function updateInteractiveDiagram() {
+            const rawA = document.getElementById('interactive-setA').value;
+            const rawB = document.getElementById('interactive-setB').value;
+            const rawR = document.getElementById('interactive-relation').value;
+
+            const setA = rawA.split(',').map(x => x.trim()).filter(x => x !== "");
+            const setB = rawB.split(',').map(x => x.trim()).filter(x => x !== "");
+
+            const pairRegex = /\(\s*([^,\s)]+)\s*,\s*([^,\s)]+)\s*\)/g;
+            let match, relationPairs = [];
+            while ((match = pairRegex.exec(rawR)) !== null) {
+                relationPairs.push({ from: match[1].trim(), to: match[2].trim() });
+            }
+
+            document.getElementById('diagram-stats').innerText = `|A| = ${setA.length}, |B| = ${setB.length}, |R| = ${relationPairs.length}`;
+
+            const linksGroup = document.getElementById('svg-links');
+            const nodesAGroup = document.getElementById('svg-nodes-A');
+            const nodesBGroup = document.getElementById('svg-nodes-B');
+
+            linksGroup.innerHTML = "";
+            nodesAGroup.innerHTML = "";
+            nodesBGroup.innerHTML = "";
+
+            const svgHeight = 240;
+            const startX_A = 80;
+            const startX_B = 380;
+
+            let posA = {}, posB = {};
+
+            if (setA.length > 0) {
+                const stepA = svgHeight / (setA.length + 1);
+                setA.forEach((val, idx) => {
+                    const y = stepA * (idx + 1);
+                    posA[val] = { x: startX_A, y: y };
+                    createNodeCircle(nodesAGroup, startX_A, y, val, "#6366f1");
+                });
+            }
+
+            if (setB.length > 0) {
+                const stepB = svgHeight / (setB.length + 1);
+                setB.forEach((val, idx) => {
+                    const y = stepB * (idx + 1);
+                    posB[val] = { x: startX_B, y: y };
+                    createNodeCircle(nodesBGroup, startX_B, y, val, "#10b981");
+                });
+            }
+
+            relationPairs.forEach(pair => {
+                const pStart = posA[pair.from];
+                const pEnd = posB[pair.to];
+                if (pStart && pEnd) {
+                    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                    line.setAttribute("x1", pStart.x);
+                    line.setAttribute("y1", pStart.y);
+                    line.setAttribute("x2", pEnd.x);
+                    line.setAttribute("y2", pEnd.y);
+                    line.setAttribute("stroke", "#818cf8");
+                    line.setAttribute("stroke-width", "2");
+                    line.setAttribute("marker-end", "url(#arrow-indigo)");
+                    linksGroup.appendChild(line);
+                }
+            });
+        }
+
+        function createNodeCircle(group, cx, cy, label, color) {
+            const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            circle.setAttribute("cx", cx);
+            circle.setAttribute("cy", cy);
+            circle.setAttribute("r", "12");
+            circle.setAttribute("fill", "#0f172a");
+            circle.setAttribute("stroke", color);
+            circle.setAttribute("stroke-width", "2");
+
+            const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            text.setAttribute("x", cx);
+            text.setAttribute("y", cy + 4);
+            text.setAttribute("fill", "#ffffff");
+            text.setAttribute("font-size", "11px");
+            text.setAttribute("font-weight", "bold");
+            text.setAttribute("text-anchor", "middle");
+            text.textContent = label;
+
+            g.appendChild(circle);
+            g.appendChild(text);
+            group.appendChild(g);
+        }
+
+        function renderDatabase() {
+            const tbody = document.getElementById('db-table-body');
+            if(!tbody) return;
+            tbody.innerHTML = "";
+            databaseRecords.forEach(record => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td class="px-4 py-2.5 font-bold text-slate-900">${record.id}</td><td class="px-4 py-2.5 text-slate-600">${record.name}</td><td class="px-4 py-2.5"><span class="bg-blue-50 text-blue-700 text-[10px] px-1.5 py-0.5 rounded font-bold">${record.major}</span></td>`;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function insertDatabaseTuple() {
+            const id = document.getElementById('db-input-id').value.trim();
+            const name = document.getElementById('db-input-name').value.trim();
+            const major = document.getElementById('db-input-major').value.trim();
+
+            if (!id || !name || !major) return alert("กรุณากรอกข้อมูลให้ครบครับ");
+            if (databaseRecords.some(r => r.id === id)) return alert("ผิดกฎ Primary Key! รหัสนี้ซ้ำ");
+
+            databaseRecords.push({ id, name, major });
+            renderDatabase();
+            document.getElementById('db-input-id').value = "";
+            document.getElementById('db-input-name').value = "";
+            document.getElementById('db-input-major').value = "";
+        }
+
+        function renderMatrixUI() {
+            const container = document.getElementById('matrix-grid-container');
+            if(!container) return;
+            container.innerHTML = "";
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    const cellVal = matrixState[i][j];
+                    const btn = document.createElement('button');
+                    btn.className = `h-10 w-10 text-xs font-mono font-bold flex items-center justify-center rounded border transition cursor-pointer ${cellVal === 1 ? 'bg-indigo-600 text-white border-indigo-700' : 'bg-white text-slate-400 border-slate-200'}`;
+                    btn.innerText = cellVal;
+                    btn.onclick = () => { matrixState[i][j] = matrixState[i][j] === 1 ? 0 : 1; renderMatrixUI(); };
+                    container.appendChild(btn);
+                }
+            }
+            let mRef = matrixState[0][0]===1 && matrixState[1][1]===1 && matrixState[2][2]===1;
+            let mSym = true, mAnti = true;
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    if (matrixState[i][j] === 1 && matrixState[j][i] !== 1) mSym = false;
+                    if (i !== j && matrixState[i][j] === 1 && matrixState[j][i] === 1) mAnti = false;
+                }
+            }
+            document.getElementById('m-ref').innerText = mRef ? "TRUE" : "FALSE";
+            document.getElementById('m-ref').className = mRef ? "text-emerald-600 font-bold" : "text-rose-500 font-bold";
+            document.getElementById('m-sym').innerText = mSym ? "TRUE" : "FALSE";
+            document.getElementById('m-sym').className = mSym ? "text-emerald-600 font-bold" : "text-rose-500 font-bold";
+            document.getElementById('m-anti').innerText = mAnti ? "TRUE" : "FALSE";
+            document.getElementById('m-anti').className = mAnti ? "text-emerald-600 font-bold" : "text-rose-500 font-bold";
+        }
+
+        function resetMatrixGrid() { matrixState = [[0,0,0],[0,0,0],[0,0,0]]; renderMatrixUI(); }
+
+        function visualizeModuloRelation() {
+            const m = parseInt(document.getElementById('interactive-mod-m').value) || 3;
+            const maxN = parseInt(document.getElementById('interactive-mod-max').value) || 6;
+            const classesList = document.getElementById('mod-classes-list');
+            if(!classesList) return; classesList.innerHTML = "";
+            
+            let classes = {}; for (let r = 0; r < m; r++) classes[r] = [];
+            for (let i = 1; i <= maxN; i++) classes[i % m].push(i);
+
+            for (let r = 0; r < m; r++) {
+                if (classes[r].length === 0) continue;
+                const item = document.createElement('div');
+                item.className = "p-1.5 bg-slate-50 border border-slate-200 rounded-lg flex justify-between items-center bg-white";
+                item.innerHTML = `<div><span class="text-indigo-600 font-bold">[${classes[r][0]}]</span>={${classes[r].join(',')}}</div><span class="text-[9px] bg-indigo-100 text-indigo-800 font-bold px-1.5 py-0.5 rounded">เศษ ${r}</span>`;
+                classesList.appendChild(item);
+            }
+
+            const matrixContainer = document.getElementById('mod-matrix-container');
+            if(matrixContainer) {
+                matrixContainer.style.gridTemplateColumns = `repeat(${maxN}, minmax(0, 1fr))`;
+                matrixContainer.innerHTML = "";
+                for (let i = 1; i <= maxN; i++) {
+                    for (let j = 1; j <= maxN; j++) {
+                        const isRelated = (i % m) === (j % m);
+                        const cell = document.createElement('div');
+                        cell.className = `w-6 h-6 flex items-center justify-center font-bold border text-[10px] rounded-[3px] ${isRelated ? 'bg-indigo-600 text-white border-indigo-700' : 'bg-white text-slate-200 border-slate-100'}`;
+                        cell.innerText = isRelated ? "1" : "0";
+                        matrixContainer.appendChild(cell);
+                    }
+                }
+            }
+
+            const nodeGroup = document.getElementById('mod-svg-nodes');
+            const edgeGroup = document.getElementById('mod-svg-edges');
+            const bgClusterGroup = document.getElementById('mod-svg-bg-clusters');
+            if(!nodeGroup || !edgeGroup) return;
+            nodeGroup.innerHTML = ""; edgeGroup.innerHTML = ""; bgClusterGroup.innerHTML = "";
+
+            let clusterCenters = [];
+            for (let r = 0; r < m; r++) {
+                const angle = (r * 2 * Math.PI) / m - Math.PI / 2;
+                clusterCenters.push({ x: 140 + Math.cos(angle) * 75, y: 110 + Math.sin(angle) * 55 });
+            }
+
+            let nodePositions = {};
+            for (let r = 0; r < m; r++) {
+                const currentClusterNodes = classes[r]; if (currentClusterNodes.length === 0) continue;
+                const center = clusterCenters[r];
+                currentClusterNodes.forEach((nodeValue, index) => {
+                    if (currentClusterNodes.length === 1) { nodePositions[nodeValue] = { x: center.x, y: center.y }; } 
+                    else {
+                        const offsetAngle = (index * 2 * Math.PI) / currentClusterNodes.length;
+                        nodePositions[nodeValue] = { x: center.x + Math.cos(offsetAngle) * 18, y: center.y + Math.sin(offsetAngle) * 18 };
+                    }
+                });
+            }
+
+            for (let i = 1; i <= maxN; i++) {
+                for (let j = 1; j <= maxN; j++) {
+                    if ((i % m) === (j % m)) {
+                        const start = nodePositions[i]; const end = nodePositions[j];
+                        if (!start || !end) continue;
+                        if (i === j) {
+                            const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                            path.setAttribute("d", `M ${start.x} ${start.y - 9} C ${start.x - 12} ${start.y - 24}, ${start.x + 12} ${start.y - 24}, ${start.x} ${start.y - 9}`);
+                            path.setAttribute("stroke", "#ec4899"); path.setAttribute("stroke-width", "1.2"); path.setAttribute("fill", "none"); path.setAttribute("marker-end", "url(#arrow-mod-forward)");
+                            edgeGroup.appendChild(path);
+                        } else {
+                            const dx = end.x - start.x; const dy = end.y - start.y; const dist = Math.sqrt(dx * dx + dy * dy);
+                            const offsetX = (-dy / (dist || 1)) * 3.5; const offsetY = (dx / (dist || 1)) * 3.5;
+                            const line = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                            line.setAttribute("d", `M ${start.x + offsetX} ${start.y + offsetY} L ${end.x + offsetX} ${end.y + offsetY}`);
+                            line.setAttribute("stroke", "#6366f1"); line.setAttribute("stroke-width", "1.2"); line.setAttribute("fill", "none"); line.setAttribute("marker-end", "url(#arrow-mod-forward)");
+                            edgeGroup.appendChild(line);
+                        }
+                    }
+                }
+            }
+
+            for (let i = 1; i <= maxN; i++) {
+                const pos = nodePositions[i]; if (!pos) continue;
+                const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+                const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                circle.setAttribute("cx", pos.x); circle.setAttribute("cy", pos.y); circle.setAttribute("r", "9"); circle.setAttribute("fill", "#1e1b4b"); circle.setAttribute("stroke", "#818cf8");
+                const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                text.setAttribute("x", pos.x); text.setAttribute("y", pos.y + 3); text.setAttribute("fill", "#ffffff"); text.setAttribute("font-size", "9px"); text.setAttribute("text-anchor", "middle"); text.textContent = i;
+                g.appendChild(circle); g.appendChild(text); nodeGroup.appendChild(g);
+            }
+        }
+
+        const digraphModels = {
+            reflexive: {
+                title: "คุณสมบัติการสะท้อน (Reflexive Relation)", formula: "A = {1, 2, 3}, \\forall a \\in A, (a, a) \\in R",
+                desc: "สมาชิกทุกตัวต้องมีความสัมพันธ์เข้าหาตัวมันเองเสมอกลไกบนกราฟระบุทิศทางจะต้องเกิดห่วงลูปวนรอบโหนดครบทุกตำแหน่งอย่างไม่มีข้อยกเว้น",
+                set: ["1", "2", "3"], pairs: [{from: "1", to: "1"}, {from: "2", to: "2"}, {from: "3", to: "3"}, {from: "1", to: "2"}],
+                visualRule: "💡 สังเกตเส้นห่วงกลมสีชมพู (Self-loops) จะต้องปรากฏขึ้นครบถ้วนทุกโหนด"
+            },
+            symmetric: {
+                title: "คุณสมบัติการสมมาตร (Symmetric Relation)", formula: "\\forall a,b \\in A, ((a, b) \\in R \\rightarrow (b, a) \\in R)",
+                desc: "หากมีหัวลูกศรเชื่อมเดินทางจากโหนดใดไปยังอีกโหนดหนึ่ง จะต้องมีเส้นทางลูกศรขนานลากคู่สวนกลับมาจุดเริ่มต้นเสมอ (2-way connection)",
+                set: ["1", "2", "3"], pairs: [{from: "1", to: "2"}, {from: "2", to: "1"}, {from: "2", to: "3"}, {from: "3", to: "2"}],
+                visualRule: "💡 ลูกศรระหว่างแต่ละโหนดจะเป็นแบบคู่ขนาน มีขาไปก็ต้องมีขากลับเสมอ"
+            },
+            antisymmetric: {
+                title: "การปฏิสมมาตร (Antisymmetric Relation)", formula: "\\forall a,b \\in A, (((a, b) \\in R \\wedge (b, a) \\in R) \\rightarrow a = b)",
+                desc: "ห้ามมิให้มีลูกศรคู่ชี้ไป-กลับระหว่างโหนดคู่ใดๆ ที่เป็นคนละตัวกันเด็ดขาด อนุญาตให้มีลูกศรคู่ทิศทางเดียวกันได้เฉพาะกรณีลูปเข้าตัวเองเท่านั้น",
+                set: ["1", "2", "3"], pairs: [{from: "1", to: "2"}, {from: "2", to: "3"}, {from: "1", to: "3"}, {from: "1", to: "1"}],
+                visualRule: "💡 ลูกศรเชื่อมต่อระหว่างต่างโหนดจะเป็นแบบทิศทางเดี่ยว (One-way) เท่านั้น ไม่มีการสวนทาง"
+            },
+            transitive: {
+                title: "คุณสมบัติการถ่ายทอด (Transitive Relation)", formula: "\\forall a,b,c \\in A, (((a, b) \\in R \\wedge (b, c) \\in R) \\rightarrow (a, c) \\in R)",
+                desc: "ถ้าหากสามารถเดินทางต่อช่วงจากจุดแรกไปสอง และจุดสองเชื่อมไปสามสำเร็จ จะต้องเกิดเส้นทางลัดบินตรงจากจุดแรกข้ามไปหาจุดที่สามปรากฏขึ้นมาคู่กัน",
+                set: ["1", "2", "3"], pairs: [{from: "1", to: "2"}, {from: "2", to: "3"}, {from: "1", to: "3"}],
+                visualRule: "💡 มองเห็นลักษณะ 'ทางลัดรูปสามเหลี่ยม' เมื่อมี 1→2 และ 2→3 ระบบจะบังคับให้เกิดเส้น 1→3 ทันที"
+            }
+        };
+
+        function switchDigraphModel(modelKey) {
+            document.querySelectorAll('.model-tab-btn').forEach(btn => {
+                btn.className = "model-tab-btn px-2.5 py-1 text-xs font-semibold rounded-md transition duration-150 text-slate-600 hover:text-slate-900";
+            });
+            const activeBtn = document.getElementById(`btn-model-${modelKey}`);
+            if(activeBtn) activeBtn.className = "model-tab-btn px-2.5 py-1 text-xs font-semibold rounded-md transition duration-150 bg-indigo-600 text-white shadow-xs";
+
+            const data = digraphModels[modelKey];
+            document.getElementById('model-title').innerHTML = `<i class="fa-solid fa-circle-nodes text-indigo-500"></i> ${data.title}`;
+            document.getElementById('model-formula').innerText = '$$' + data.formula + '$$';
+            document.getElementById('model-desc').innerText = data.desc;
+            document.getElementById('model-visual-rule').innerText = data.visualRule;
+            document.getElementById('model-pairs').innerText = `R = { ${data.pairs.map(p => `(${p.from},${p.to})`).join(', ')} }`;
+
+            const nodeGroup = document.getElementById('model-svg-nodes');
+            const edgeGroup = document.getElementById('model-svg-edges');
+            if(!nodeGroup || !edgeGroup) return;
+            nodeGroup.innerHTML = ""; edgeGroup.innerHTML = "";
+
+            const nodePositions = { "1": {x: 160, y: 55}, "2": {x: 80, y: 165}, "3": {x: 240, y: 165} };
+
+            data.pairs.forEach(p => {
+                const start = nodePositions[p.from]; const end = nodePositions[p.to];
+                if (p.from === p.to) {
+                    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                    path.setAttribute("d", `M ${start.x} ${start.y - 10} C ${start.x - 14} ${start.y - 28}, ${start.x + 14} ${start.y - 28}, ${start.x} ${start.y - 10}`);
+                    path.setAttribute("stroke", "#ec4899"); path.setAttribute("stroke-width", "1.75"); path.setAttribute("fill", "none"); path.setAttribute("marker-end", "url(#arrow-model-blue)");
+                    edgeGroup.appendChild(path);
+                } else {
+                    const dx = end.x - start.x; const dy = end.y - start.y; const dist = Math.sqrt(dx * dx + dy * dy);
+                    const isSymmetricPair = data.pairs.some(x => x.from === p.to && x.to === p.from);
+                    const offset = isSymmetricPair ? 6 : 3;
+                    const ctrlX = (start.x + end.x) / 2 + (-dy / (dist || 1)) * offset;
+                    const ctrlY = (start.y + end.y) / 2 + (dx / (dist || 1)) * offset;
+
+                    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                    path.setAttribute("d", `M ${start.x} ${start.y} Q ${ctrlX} ${ctrlY} ${end.x} ${end.y}`);
+                    path.setAttribute("stroke", "#818cf8"); path.setAttribute("stroke-width", "1.5"); path.setAttribute("fill", "none"); path.setAttribute("marker-end", "url(#arrow-model-blue)");
+                    edgeGroup.appendChild(path);
+                }
+            });
+
+            data.set.forEach(v => {
+                const pos = nodePositions[v];
+                const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+                const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                circle.setAttribute("cx", pos.x); circle.setAttribute("cy", pos.y); circle.setAttribute("r", "11"); circle.setAttribute("fill", "#0f172a"); circle.setAttribute("stroke", "#6366f1"); circle.setAttribute("stroke-width", "1.5");
+                const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                text.setAttribute("x", pos.x); text.setAttribute("y", pos.y + 3); text.setAttribute("fill", "#ffffff"); text.setAttribute("font-size", "10px"); text.setAttribute("text-anchor", "middle"); text.textContent = v;
+                g.appendChild(circle); g.appendChild(text); nodeGroup.appendChild(g);
+            });
+
+            if (window.MathJax && window.MathJax.typesetPromise) window.MathJax.typesetPromise();
+        }
+
+        window.onload = function() {
+            updateInteractiveDiagram();
+            renderDatabase();
+            renderMatrixUI();
+            visualizeModuloRelation();
+            switchDigraphModel('reflexive');
+        };
+    </script>
+</body>
+</html>
