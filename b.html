@@ -476,7 +476,7 @@
                     <hr class="border-slate-200">
                     <div class="space-y-3">
                         <h3 class="text-lg font-bold text-slate-900 flex items-center">
-                            <i class="fa-solid fa-layer-group mr-2"></i> 2. นิยามของ Equivalence Class
+                            <i class="fa-solid fa-layer-group mr-2"></i> 2. นิยามของคลาสสมมูล (Definition of Equivalence Class)
                         </h3>
                         <p class="text-sm text-slate-600 leading-relaxed">
                                 ให้ $\sim$ เป็นความสัมพันธ์สมมูลบนเซต $A$ และให้ $a \in A$ <b>คลาสสมมูล (Equivalence Class)</b> ของ $a$ เขียนแทนด้วยสัญลักษณ์ $[a]_{\sim}$ คือเซตของสมาชิกทุกตัวใน $A$ ที่มีความสัมพันธ์ $R$ กับสมาชิก $a$ นิยามเชิงสัญลักษณ์ได้ดังนี้:
@@ -504,10 +504,10 @@
                         <p class="text-xs text-slate-600 leading-relaxed">
                             ซึ่งนิยามนี้เทียบเท่ากับเงื่อนไขที่ว่า ทั้ง $a$ และ $b$ ต้องมี <b>"เศษเหลือจากการหารด้วย $m$" ที่เท่ากันพอดี</b>
                             ให้สัญลักษณ์ $\equiv_m$ แทนความสัมพันธ์ Congruence Modulo $m$ <br>
-                            เมื่อลองพิจารณา equivalent classes ของสมาชิกใน $\mathbb{Z}$ เมื่ออิงจาก $\equiv_m$ ทั้งหมดที่แตกต่างกัน จะพบว่ามีจำนวน $m$ เซตพอดี
+                            เมื่อลองพิจารณา equivalent classes ของสมาชิกใน $A$ เมื่ออิงจาก $\equiv_m$ ทั้งหมดที่แตกต่างกัน จะพบว่ามีจำนวน $m$ เซต
                             ได้แก่ $$[0]_{\equiv_m},[1]_{\equiv_m},[2]_{\equiv_m}, \dots,[m - 1]_{\equiv_m}$$
                             ซึ่งจากนิยามเราก็จะเห็นว่า $[0]_{\equiv_m}$ เป็นเซตของจำนวนเต็มที่หาร $m$ ลงตัว, $[1]_{\equiv_m}$ เป็นเซตของจำนวนเต็มที่หาร $m$ แล้วเหลือเศษ $1$
-                            และเป็นแบบนี้ไปเรื่อยๆ จนถึง $m - 1$
+                            , $[2]_{\equiv_m}$ เป็นเซตของจำนวนเต็มที่หาร $m$ แล้วเหลือเศษ $2$ และเป็นแบบนี้ไปเรื่อยๆ จนถึง $m - 1$
                         </p>
                     </div>
 
@@ -515,11 +515,10 @@
                     <!-- Subsection 4: Modulo Control Toolbar & Interactive Simulation -->
                      <div class="space-y-6">
                         <h3 class="text-lg font-bold text-slate-900 flex items-center">
-                            <i class="fa-solid fa-chart-pie mr-2 text-indigo-600"></i>4. แสดงความสัมพันธ์ Congruence Modulo ด้วยแผนภูมิวงกลม
+                            <i class="fa-solid fa-chart-pie mr-2 text-indigo-600"></i>4. แผงจำลองด้วยแผนภูมิวงกลมแบ่งคลาสสมมูล (Interactive Partition Pie Chart)
                         </h3>
                         <p class="text-sm text-slate-600 leading-relaxed">
-                            เราสามารถคิดว่าความสัมพันธ์ Congruence Modulo $m$ เป็นการแบ่งเซตของจำนวนเต็มออกเป็น $m$ เซตย่อย ดังที่ได้กล่าวมา ซึ่งเราสามารถนำมาแสดงเป็นแผนภูมิวงกลมได้
-                            ให้ทั้งรูปวงกลมแทนเซตของจำนวนเต็มทั้งหมด เราจะแบ่งส่วนของวงกลมออกตามแต่ละ Equivalent class
+                            ในระบบจำลองจำแนกกลุ่มแบบพาร์ทิชันด้านล่างนี้ คุณสามารถกำหนดค่าตัวหาร $m$ และขนาดของเซตข้อมูลได้ จากนั้นให้ **ทดลองคลิกไปบนชิ้นเค้กแต่ละชิ้นของแผนภูมิวงกลม** เพื่อสืบค้นคลาสสมมูล (Equivalence Class) ที่เกิดจากการแบ่งกลุ่มโครงสร้างความสัมพันธ์แบบแยกชิ้นส่วนอย่างเด็ดขาด
                         </p>
                         
                         <div class="bg-white border border-slate-200 p-4 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs">
@@ -528,10 +527,14 @@
                                     <label class="block text-[11px] font-bold text-slate-500 mb-1 uppercase tracking-wider">ตัวหาร Modulo ($m$):</label>
                                     <input id="interactive-mod-m" type="number" min="2" max="8" value="3" onchange="visualizeModuloRelation()" class="w-16 px-2 py-1 bg-slate-50 border border-slate-300 rounded-lg text-center font-bold text-indigo-600 focus:outline-none focus:border-indigo-500">
                                 </div>
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-500 mb-1 uppercase tracking-wider">เซต $A$ (0 ถึง N):</label>
+                                    <input id="interactive-mod-max" type="number" min="3" max="30" value="10" onchange="visualizeModuloRelation()" class="w-16 px-2 py-1 bg-slate-50 border border-slate-300 rounded-lg text-center font-bold text-indigo-600 focus:outline-none focus:border-indigo-500">
+                                </div>
                             </div>
                             <div class="text-xs text-slate-500 max-w-md flex items-start space-x-2">
                                 <i class="fa-solid fa-lightbulb text-amber-500 mt-0.5 shrink-0"></i>
-                                <p>ไม่ว่าระบบจำนวนเต็ม $\mathbb{Z}$ จะมีสมาชิกเป็นอนันต์ แต่จะถูกจำแนกออกเป็นคลาสสมมูลที่แตกต่างกันได้เพียง $m$ คลาสอย่างพอดิบพอดีตามทฤษฎีพาร์ทิชัน</p>
+                                <p>เซตจักรวาล $A$ จะถูกซอยออกเป็น $m$ ชิ้นอย่างเท่าๆ กันและไม่ซ้อนทับกันเลยตามเงื่อนไขของกฎพาร์ทิชัน (Partition)</p>
                             </div>
                         </div>
 
@@ -539,7 +542,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch mt-4">
                             <!-- Visual Dynamic Pie Chart Area -->
                             <div class="md:col-span-5 border border-slate-200 rounded-xl p-5 bg-white shadow-xs flex flex-col items-center justify-center min-h-[320px]">
-                                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 block w-full text-left"><i class="fa-solid fa-chart-pie mr-1"></i> คลาสสมมูลทั้งหมดบน $\mathbb{Z}$ (คลิกเลือกคลาสเศษ $r$)</span>
+                                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 block w-full text-left"><i class="fa-solid fa-chart-pie mr-1"></i> แผนภูมิวงกลมผลลัพธ์พาร์ทิชัน (คลิกเลือกชิ้นเค้ก)</span>
                                 <div class="relative w-full flex justify-center">
                                     <svg id="mod-pie-svg" width="220" height="220" class="overflow-visible cursor-pointer"></svg>
                                 </div>
@@ -550,7 +553,7 @@
                                 <div>
                                     <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
                                         <h4 class="font-bold text-indigo-400 text-xs uppercase tracking-wider flex items-center">
-                                            <i class="fa-solid fa-magnifying-glass mr-2"></i>กล่องตรวจสอบคลาสสมมูลบน $\mathbb{Z}$ (Class Inspector)
+                                            <i class="fa-solid fa-magnifying-glass mr-2"></i>กล่องตรวจสอบรายละเอียดคลาสสมมูล (Class Inspector)
                                         </h4>
                                         <span id="inspector-badge" class="text-[10px] bg-slate-800 border border-slate-700 rounded px-2 py-0.5 font-bold font-mono text-slate-400">WAITING_CLICK</span>
                                     </div>
@@ -559,13 +562,13 @@
                                     <div id="inspector-display-content" class="space-y-4">
                                         <div class="text-slate-400 text-xs flex flex-col items-center justify-center py-12 text-center">
                                             <i class="fa-solid fa-hand-pointer text-2xl text-slate-600 mb-2 animate-bounce"></i>
-                                            <p>คลิกเลือกสับเซตเศษเหลือบนชิ้นแผนภูมิวงกลม เพื่อเจาะลึกโครงสร้างเซตอนันต์ของคลาสนั้น</p>
+                                            <p>คลิกเลือกสับเซตเศษเหลือบนชิ้นแผนภูมิวงกลม เพื่อส่องเซตภายในคลาสสมมูลนั้น</p>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="text-[11px] text-emerald-400 bg-emerald-950/40 p-3 rounded-xl border border-emerald-900/40 leading-normal">
-                                    💡 <b>สรุปพาร์ทิชันบน $\mathbb{Z}$ :</b> คลาสสมมูลทั้งหมดเมื่อนำมา Union กันจะได้ผลลัพธ์เป็นเซตของจำนวนเต็ม $\mathbb{Z}$ ทั้งเซตพอดี และทุกคลาสจะมีจุดร่วมอินเตอร์เซกชันกันเป็นเซตว่าง ($\emptyset$)
+                                    💡 <b>สรุปพาร์ทิชัน:</b> ทุกเซตย่อยเมื่อนำมา Union กันจะได้เท่ากับเซตตั้งต้น $A$ และอินเตอร์เซกชันกันเป็นเซตว่างคู่ขนานทั้งหมดเด็ดขาด
                                 </div>
                             </div>
                         </div>
@@ -858,26 +861,36 @@
 
         function resetMatrixGrid() { matrixState = [[0,0,0],[0,0,0],[0,0,0]]; renderMatrixUI(); }
 
-        // Core Section 3 Logic with SVG Pie Chart Map Rendering on Z
+        // Core Section 3 Logic with SVG Pie Chart Map Rendering
+        let globalClassesCached = {};
         let currentSelectedModuloRemainder = null;
 
         function visualizeModuloRelation() {
             const m = parseInt(document.getElementById('interactive-mod-m').value) || 3;
+            const maxN = parseInt(document.getElementById('interactive-mod-max').value) || 10;
             const svg = document.getElementById('mod-pie-svg');
             if(!svg) return;
             svg.innerHTML = "";
 
-            // Reset current selection view to default instruction state if the slice is out of range
+            // 1. Group the values into equivalence classes
+            globalClassesCached = {};
+            for (let r = 0; r < m; r++) globalClassesCached[r] = [];
+            for (let i = 0; i <= maxN; i++) {
+                globalClassesCached[i % m].push(i);
+            }
+
+            // Reset current selection view to default instruction state if the slice is gone
             if(currentSelectedModuloRemainder !== null && currentSelectedModuloRemainder >= m) {
                 currentSelectedModuloRemainder = null;
                 resetInspectorDefaultView();
             } else if (currentSelectedModuloRemainder !== null) {
+                // Refresh data if something is already chosen
                 inspectEquivalenceClass(currentSelectedModuloRemainder);
             } else {
                 resetInspectorDefaultView();
             }
 
-            // Plot SVG Path slices for the Pie Chart Module
+            // 2. Plot SVG Path slices for the Pie Chart Module
             const centerX = 110, centerY = 110, radius = 95;
             let currentAngle = 0;
             const anglePerSlice = 360 / m;
@@ -901,11 +914,13 @@
 
                 const largeArcFlag = sliceAngle > 180 ? 1 : 0;
 
+                // SVG Arc Path command chain text
                 let pathData = `M ${centerX} ${centerY} L ${x1} ${y1} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${x2} ${y2} Z`;
 
                 const pathElement = document.createElementNS("http://www.w3.org/2000/svg", "path");
                 pathElement.setAttribute("d", pathData);
                 
+                // Active highlighting effects
                 const isSelected = (currentSelectedModuloRemainder === r);
                 pathElement.setAttribute("fill", colors[r % colors.length]);
                 pathElement.setAttribute("stroke", isSelected ? "#0f172a" : "#ffffff");
@@ -918,7 +933,7 @@
                 pathElement.onclick = (e) => {
                     e.stopPropagation();
                     currentSelectedModuloRemainder = r;
-                    visualizeModuloRelation(); 
+                    visualizeModuloRelation(); // Redraw layout structure to reflect border styling mutations
                     inspectEquivalenceClass(r);
                 };
 
@@ -938,7 +953,7 @@
                 textElement.setAttribute("font-weight", "bold");
                 textElement.setAttribute("text-anchor", "middle");
                 textElement.setAttribute("pointer-events", "none");
-                textElement.textContent = `[${r}]`;
+                textElement.textContent = `r = ${r}`;
                 svg.appendChild(textElement);
 
                 currentAngle = endAngle;
@@ -954,7 +969,7 @@
                 box.innerHTML = `
                     <div class="text-slate-400 text-xs flex flex-col items-center justify-center py-12 text-center">
                         <i class="fa-solid fa-hand-pointer text-2xl text-slate-600 mb-2 animate-bounce"></i>
-                        <p>คลิกเลือกสับเซตเศษเหลือบนชิ้นแผนภูมิวงกลม เพื่อเจาะลึกโครงสร้างเซตอนันต์ของคลาสนั้น</p>
+                        <p>คลิกเลือกสับเซตเศษเหลือบนชิ้นแผนภูมิวงกลม เพื่อส่องเซตภายในคลาสสมมูลนั้น</p>
                     </div>
                 `;
             }
@@ -966,18 +981,8 @@
             const m = parseInt(document.getElementById('interactive-mod-m').value) || 3;
             if(!box) return;
 
-            // Generate an elegant sample subset showcasing negative numbers, zero, and positive numbers on Z
-            let samples = [];
-            // Sample negative values
-            for(let i = -3; i < 0; i++) {
-                let val = i * m + remainder;
-                samples.push(val);
-            }
-            // Sample zero/positive values
-            for(let i = 0; i <= 3; i++) {
-                let val = i * m + remainder;
-                samples.push(val);
-            }
+            const elementsArray = globalClassesCached[remainder] || [];
+            const representativeValue = elementsArray.length > 0 ? elementsArray[0] : remainder;
 
             if(badge) {
                 badge.innerText = `REMAINDER_${remainder}`;
@@ -987,26 +992,26 @@
             box.innerHTML = `
                 <div class="space-y-4">
                     <div>
-                        <span class="text-xs text-slate-400 block mb-1">สัญลักษณ์และตัวอย่างสมาชิกของคลาสสมมูล $[${remainder}]_{\\equiv_${m}}$ บนเซต $\\mathbb{Z}$ คือ:</span>
-                        <div class="text-md font-bold font-mono text-white bg-slate-950 px-4 py-3 rounded-xl border border-slate-800 flex items-center justify-between">
-                            <span>[${remainder}]<sub>&equiv;</sub> = { ..., ${samples.join(', ')}, ... }</span>
+                        <span class="text-xs text-slate-400 block mb-1">สัญลักษณ์คลาสสมมูลของตัวแทน $a = ${representativeValue}$ คือ:</span>
+                        <div class="text-xl font-bold font-mono text-white bg-slate-950 px-4 py-2 rounded-xl border border-slate-800 flex items-center justify-between">
+                            <span>[${representativeValue}]<sub>&equiv;</sub> = { ${elementsArray.join(', ')} }</span>
+                            <span class="text-xs text-indigo-400 font-sans font-medium bg-indigo-950/80 px-2 py-1 rounded border border-indigo-900">มีสมาชิก ${elementsArray.length} ตัว</span>
                         </div>
                     </div>
 
                     <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
-                        <span class="text-xs text-slate-400 font-semibold block uppercase tracking-wider"><i class="fa-solid fa-circle-nodes mr-1.5 text-indigo-400"></i>นิยามเงื่อนไขของคลาสสมมูลนี้:</span>
+                        <span class="text-xs text-slate-400 font-semibold block uppercase tracking-wider"><i class="fa-solid fa-circle-nodes mr-1.5 text-indigo-400"></i>เงื่อนไขความสัมพันธ์สมมูลในคลาสนี้:</span>
                         <p class="text-xs text-slate-300 leading-relaxed">
-                            $[${remainder}]_{\\equiv_m} = \\{ x \\in \\mathbb{Z} \\; \\colon \\; x \\equiv ${remainder} \\pmod{${m}} \\\}$ <br class="mb-1">
-                            หมายความว่า คลาสนี้จะรวบรวมจำนวนเต็ม $x$ ทั้งหมดในระบบจำนวนเต็ม $\\mathbb{Z}$ ที่เมื่อนำไปหารด้วย $${m}$ แล้วจะเกิด **เศษเหลือเท่ากับ $${remainder}$** เท่ากันทั้งหมด
+                            สมาชิกใดๆ $x, y$ ในเซตนี้เมื่อนำมาทดสอบความสัมพันธ์ จะสอดคล้องตามเงื่อนไข $x \equiv y \pmod ${m}$ เสมอ เพราะทุกๆ ตัวหารด้วย $${m}$ แล้วเหลือเศษเท่ากันคือ <b>เศษ ${remainder}</b>
                         </p>
                         <div class="pt-2 font-mono text-[11px] text-slate-400 border-t border-slate-800 space-y-1">
-                            <div>• รูปแบบทั่วไปของสมาชิก: $x = ${m}k + ${remainder}$ โดยที่ $k \\in \\mathbb{Z}$</div>
-                            <div>• ตัวอย่างความสัมพันธ์: สำหรับค่าติดลบอย่าง $e.g. ${samples[1]} \\in [${remainder}]_{\\equiv}$ เพราะ $${samples[1]} - (${remainder}) = ${samples[1] - remainder}$ ซึ่งหารด้วย $${m}$ ลงตัวพอดี</div>
+                            <div>• ตัวอย่าง: ${elementsArray.length > 1 ? `ให้นำสมาชิกมาจับคู่พิจารณาเช่น $${elementsArray[1]} \equiv ${elementsArray[0]} \pmod ${m}$ เพราะ $${m} \mid (${elementsArray[1]} - ${elementsArray[0]})$` : 'จำนวนสมาชิกในคลาสน้อยเกินกว่าจะแสดงคู่เปรียบต่าง'}</div>
                         </div>
                     </div>
                 </div>
             `;
 
+            // Trigger structural math formula translation via MathJax API bindings safely
             if (window.MathJax && window.MathJax.typesetPromise) {
                 window.MathJax.typesetPromise();
             }
@@ -1101,6 +1106,7 @@
             visualizeModuloRelation();
             switchDigraphModel('reflexive');
 
+            // Global handler to click outside chart slice to clear focus
             const svgEl = document.getElementById('mod-pie-svg');
             if(svgEl) {
                 svgEl.onclick = function() {
