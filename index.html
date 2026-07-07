@@ -518,14 +518,13 @@
                             <i class="fa-solid fa-chart-pie mr-2 text-indigo-600"></i>4. แสดงความสัมพันธ์ Congruence Modulo ด้วยแผนภูมิวงกลม
                         </h3>
                         <p class="text-sm text-slate-600 leading-relaxed">
-                            เราสามารถคิดว่าความสัมพันธ์ Congruence Modulo $m$ เป็นการแบ่งเซตของจำนวนเต็มออกเป็น $m$ เซตย่อย ดังที่ได้กล่าวมา ซึ่งเราสามารถนำมาแสดงเป็นแผนภูมิวงกลมได้
-                            ให้ทั้งรูปวงกลมแทนเซตของจำนวนเต็มทั้งหมด เราจะแบ่งส่วนของวงกลมออกตามแต่ละ Equivalent class
+                            กำหนดให้รูปวงกลมหนึ่งรูปแทนเซตของจำนวนเต็มทั้งหมด เราจะแบ่งส่วนของวงกลมออกตามแต่ละ Equivalent class
                         </p>
                         
                         <div class="bg-white border border-slate-200 p-4 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs">
                             <div class="flex items-center space-x-4">
                                 <div>
-                                    <label class="block text-[11px] font-bold text-slate-500 mb-1 uppercase tracking-wider">ตัวหาร Modulo ($m$):</label>
+                                    <label class="block text-[11px] font-bold text-slate-500 mb-1 tracking-wider">ตัวหาร Modulo ($m$):</label>
                                     <input id="interactive-mod-m" type="number" min="2" max="8" value="3" onchange="visualizeModuloRelation()" class="w-16 px-2 py-1 bg-slate-50 border border-slate-300 rounded-lg text-center font-bold text-indigo-600 focus:outline-none focus:border-indigo-500">
                                 </div>
                             </div>
@@ -539,7 +538,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch mt-4">
                             <!-- Visual Dynamic Pie Chart Area -->
                             <div class="md:col-span-5 border border-slate-200 rounded-xl p-5 bg-white shadow-xs flex flex-col items-center justify-center min-h-[320px]">
-                                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 block w-full text-left"><i class="fa-solid fa-chart-pie mr-1"></i> คลาสสมมูลทั้งหมดบน $\mathbb{Z}$ (คลิกเลือกคลาสเศษ $r$)</span>
+                                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 block w-full text-left"><i class="fa-solid fa-chart-pie mr-1"></i> แผนภูมิวงกลมที่แบ่งตาม Equivalent classes</span>
                                 <div class="relative w-full flex justify-center">
                                     <svg id="mod-pie-svg" width="220" height="220" class="overflow-visible cursor-pointer"></svg>
                                 </div>
@@ -550,7 +549,7 @@
                                 <div>
                                     <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
                                         <h4 class="font-bold text-indigo-400 text-xs uppercase tracking-wider flex items-center">
-                                            <i class="fa-solid fa-magnifying-glass mr-2"></i>กล่องตรวจสอบคลาสสมมูลบน $\mathbb{Z}$ (Class Inspector)
+                                            <i class="fa-solid fa-magnifying-glass mr-2"></i>Information (Class Inspector)
                                         </h4>
                                         <span id="inspector-badge" class="text-[10px] bg-slate-800 border border-slate-700 rounded px-2 py-0.5 font-bold font-mono text-slate-400">WAITING_CLICK</span>
                                     </div>
@@ -562,10 +561,6 @@
                                             <p>คลิกเลือกสับเซตเศษเหลือบนชิ้นแผนภูมิวงกลม เพื่อเจาะลึกโครงสร้างเซตอนันต์ของคลาสนั้น</p>
                                         </div>
                                     </div>
-                                </div>
-
-                                <div class="text-[11px] text-emerald-400 bg-emerald-950/40 p-3 rounded-xl border border-emerald-900/40 leading-normal">
-                                    💡 <b>สรุปพาร์ทิชันบน $\mathbb{Z}$ :</b> คลาสสมมูลทั้งหมดเมื่อนำมา Union กันจะได้ผลลัพธ์เป็นเซตของจำนวนเต็ม $\mathbb{Z}$ ทั้งเซตพอดี และทุกคลาสจะมีจุดร่วมอินเตอร์เซกชันกันเป็นเซตว่าง ($\emptyset$)
                                 </div>
                             </div>
                         </div>
@@ -997,7 +992,7 @@
                         <span class="text-xs text-slate-400 font-semibold block uppercase tracking-wider"><i class="fa-solid fa-circle-nodes mr-1.5 text-indigo-400"></i>นิยามเงื่อนไขของคลาสสมมูลนี้:</span>
                         <p class="text-xs text-slate-300 leading-relaxed">
                             $[${remainder}]_{\\equiv_m} = \\{ x \\in \\mathbb{Z} \\; \\colon \\; x \\equiv ${remainder} \\pmod{${m}} \\\}$ <br class="mb-1">
-                            หมายความว่า คลาสนี้จะรวบรวมจำนวนเต็ม $x$ ทั้งหมดในระบบจำนวนเต็ม $\\mathbb{Z}$ ที่เมื่อนำไปหารด้วย $${m}$ แล้วจะเกิด **เศษเหลือเท่ากับ $${remainder}$** เท่ากันทั้งหมด
+                            หมายความว่า คลาสนี้จะรวบรวมจำนวนเต็ม $x$ ทั้งหมดในระบบจำนวนเต็ม $\\mathbb{Z}$ ที่เมื่อนำไปหารด้วย $${m}$ แล้วจะเกิด <b>เศษเหลือเท่ากับ $${remainder}$</b> เท่ากันทั้งหมด
                         </p>
                         <div class="pt-2 font-mono text-[11px] text-slate-400 border-t border-slate-800 space-y-1">
                             <div>• รูปแบบทั่วไปของสมาชิก: $x = ${m}k + ${remainder}$ โดยที่ $k \\in \\mathbb{Z}$</div>
@@ -1065,7 +1060,7 @@
                 if (p.from === p.to) {
                     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
                     path.setAttribute("d", `M ${start.x} ${start.y - 10} C ${start.x - 14} ${start.y - 28}, ${start.x + 14} ${start.y - 28}, ${start.x} ${start.y - 10}`);
-                    path.setAttribute("stroke", "#ec4899"); path.setAttribute("stroke-width", "1.75"); path.setAttribute("fill", "none"); path.setAttribute("marker-end", "url(#arrow-model-blue)");
+                    path.setAttribute("stroke", "#ec4899"); path.setAttribute("stroke-width", "1.75"); path.setAttribute("fill", "none");
                     edgeGroup.appendChild(path);
                 } else {
                     const dx = end.x - start.x; const dy = end.y - start.y; const dist = Math.sqrt(dx * dx + dy * dy);
