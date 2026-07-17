@@ -445,6 +445,75 @@
                         </div>
                     </div>
                 </div>
+
+                <hr class="border-slate-200">
+
+                <!-- 4. Interactive Properties Game -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-bold text-slate-900 flex items-center">
+                        <i class="fa-solid fa-gamepad text-emerald-600 mr-2.5"></i>4. มินิเกมทดสอบสมอง: ท้าทายคุณสมบัติความสัมพันธ์ (Properties Challenge)
+                    </h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        ระบบจะทำการสุ่มเซต $A$ และสุ่มความสัมพันธ์ $R$ บนเซต $A$ ขึ้นมา ให้ผู้เรียนวิเคราะห์แล้วติ๊กเลือกคุณสมบัติทั้งหมดที่ตรงตามเงื่อนไขให้ถูกต้องครบถ้วน!
+                    </p>
+
+                    <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                        <!-- Game Question Card -->
+                        <div class="md:col-span-6 space-y-4 bg-slate-900 text-slate-100 p-5 rounded-xl border border-slate-800 relative overflow-hidden shadow-inner">
+                            <div class="absolute top-0 right-0 p-3 opacity-10 text-6xl text-white">
+                                <i class="fa-solid fa-brain"></i>
+                            </div>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950 border border-emerald-900 px-2 py-0.5 rounded">โจทย์ความสัมพันธ์ปัจจุบัน</span>
+                            <div class="space-y-2 pt-2">
+                                <p class="text-xs text-slate-400 font-mono" id="game-setA-display">กำหนดเซต $A = \{1, 2, 3\}$</p>
+                                <div id="game-question-display" class="text-base font-bold font-mono text-indigo-300 bg-slate-950 p-4 rounded-lg border border-slate-800 text-center select-all tracking-wide">
+                                    R = { }
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between text-xs text-slate-400 pt-2 border-t border-slate-800/60">
+                                <div>คะแนนของคุณ: <span id="game-score" class="font-bold font-mono text-white text-sm bg-indigo-600/60 px-2 py-0.5 rounded ml-1">0</span></div>
+                                <button onclick="generateGameQuestion()" class="text-xs text-indigo-400 hover:text-indigo-300 font-semibold cursor-pointer">
+                                    <i class="fa-solid fa-shuffle mr-1"></i> สุ่มโจทย์ใหม่
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Game Input Selector & Action Buttons -->
+                        <div class="md:col-span-6 space-y-5">
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block"><i class="fa-solid fa-list-check mr-1.5"></i>เลือกคุณสมบัติที่ถูกต้อง (เลือกได้มากกว่า 1 ข้อ หรือไม่เลือกเลย):</span>
+                            
+                            <div class="grid grid-cols-2 gap-3">
+                                <label class="flex items-center space-x-2.5 p-2.5 rounded-lg border border-slate-200 hover:bg-slate-50 transition cursor-pointer text-xs font-medium">
+                                    <input type="checkbox" id="chk-game-reflexive" class="w-4 h-4 rounded text-indigo-600 border-slate-300 focus:ring-indigo-500">
+                                    <span>สะท้อน (Reflexive)</span>
+                                </label>
+                                <label class="flex items-center space-x-2.5 p-2.5 rounded-lg border border-slate-200 hover:bg-slate-50 transition cursor-pointer text-xs font-medium">
+                                    <input type="checkbox" id="chk-game-symmetric" class="w-4 h-4 rounded text-indigo-600 border-slate-300 focus:ring-indigo-500">
+                                    <span>สมมาตร (Symmetric)</span>
+                                </label>
+                                <label class="flex items-center space-x-2.5 p-2.5 rounded-lg border border-slate-200 hover:bg-slate-50 transition cursor-pointer text-xs font-medium">
+                                    <input type="checkbox" id="chk-game-antisymmetric" class="w-4 h-4 rounded text-indigo-600 border-slate-300 focus:ring-indigo-500">
+                                    <span>ต้านสมมาตร (Antisymmetric)</span>
+                                </label>
+                                <label class="flex items-center space-x-2.5 p-2.5 rounded-lg border border-slate-200 hover:bg-slate-50 transition cursor-pointer text-xs font-medium">
+                                    <input type="checkbox" id="chk-game-transitive" class="w-4 h-4 rounded text-indigo-600 border-slate-300 focus:ring-indigo-500">
+                                    <span>ถ่ายทอด (Transitive)</span>
+                                </label>
+                            </div>
+
+                            <div class="flex gap-3 pt-1">
+                                <button onclick="checkGameAnswer()" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-xl text-xs shadow-xs transition cursor-pointer text-center">
+                                    <i class="fa-solid fa-circle-check mr-1.5"></i> ตรวจคำตอบ
+                                </button>
+                            </div>
+
+                            <!-- Alert Feedback banner box inside game panel -->
+                            <div id="game-feedback" class="hidden text-xs p-3 rounded-lg font-medium border flex items-start space-x-2">
+                                <!-- Dynamic message and icons injected from JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <!-- SECTION 3: Equivalence Relation -->
@@ -485,7 +554,7 @@
                                 $$[a]_{\sim} = \{x \in A \; \colon \; (x, a) \in R\}$$
                         </div>
                         <p class="text-xs text-slate-500 pt-1">
-                            💡 ข้อสังเกต: คลาสสมมูลสองคลาสใดๆ $[a]_{\sim}$ และ $[b]_{\sim}$ จะมีลักษณะที่แยกขาดจากกันอย่างเด็ดขาด คือเป็นเซตที่เหมือนกันทุกประการ ($[a]_{\sim} = [b]_{\sim}$) หรือไม่มีส่วนร่วมกันเลย ($[a]_{\sim} \cap [b]_{\sim} = \emptyset$)
+                            💡 ข้อสังเกต: คลาสสมมูลสองคลาสใดๆ $[a]_{\sim}$ และ $[b]_{\sim}$ จะมีลักษณะที่แยกขาดจากกันอย่างเด็ดขาด คือเป็นเซตที่เหมือนกันทุกประการ ($[a]_{\sim} = $[b]_{\sim}$) หรือไม่มีส่วนร่วมกันเลย ($[a]_{\sim} \cap [b]_{\sim} = \emptyset$)
                         </p>
                     </div>
                     <hr class="border-slate-200">
@@ -682,6 +751,10 @@
                 visualizeModuloRelation();
             } else if (targetId === 'sec-properties') {
                 switchDigraphModel('reflexive');
+                // Generate first question when users open Properties module
+                if(!gameObject.currentPairs.length) {
+                    generateGameQuestion();
+                }
             }
         }
 
@@ -1089,12 +1162,180 @@
             if (window.MathJax && window.MathJax.typesetPromise) window.MathJax.typesetPromise();
         }
 
+        // ==========================================
+        // NEW MODULE: 4. PROPERTIES GAME LOGIC
+        // ==========================================
+        let gameObject = {
+            score: 0,
+            currentSetA: ["1", "2", "3"],
+            currentPairs: [],
+            answers: { reflexive: false, symmetric: false, antisymmetric: false, transitive: false }
+        };
+
+        function generateGameQuestion() {
+            // Clear current feedback and state checkboxes
+            const feedbackBox = document.getElementById('game-feedback');
+            feedbackBox.classList.add('hidden');
+            document.getElementById('chk-game-reflexive').checked = false;
+            document.getElementById('chk-game-symmetric').checked = false;
+            document.getElementById('chk-game-antisymmetric').checked = false;
+            document.getElementById('chk-game-transitive').checked = false;
+
+            // 1. RANDOMIZE SET A: Pick 3 unique numbers from 1 to 9
+            const digitPool = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
+            const shuffledDigits = digitPool.sort(() => 0.5 - Math.random());
+            const randomSetA = shuffledDigits.slice(0, 3).sort(); // Sort elements numerically
+            gameObject.currentSetA = randomSetA;
+
+            // Update Set A UI display text
+            document.getElementById('game-setA-display').innerText = `กำหนดเซต $A = \\{${randomSetA.join(', ')}\\}$`;
+
+            // Generate all possible Cartesian product pairs based on the new randomized Set A
+            const allPossiblePairs = [];
+            for(let i = 0; i < 3; i++) {
+                for(let j = 0; j < 3; j++) {
+                    allPossiblePairs.push({from: randomSetA[i], to: randomSetA[j]});
+                }
+            }
+
+            // Decide on a game question template variant style to ensure valid properties exist
+            let chosenPairs = [];
+            const gameStyleMode = Math.floor(Math.random() * 5);
+            const a1 = randomSetA[0], a2 = randomSetA[1], a3 = randomSetA[2];
+
+            if(gameStyleMode === 0) {
+                // Style 0: Identity relation (Reflexive, Symmetric, Antisymmetric, Transitive)
+                chosenPairs = [{from: a1, to: a1}, {from: a2, to: a2}, {from: a3, to: a3}];
+            } else if (gameStyleMode === 1) {
+                // Style 1: Pure strict ordering (Antisymmetric, Transitive)
+                chosenPairs = [{from: a1, to: a2}, {from: a2, to: a3}, {from: a1, to: a3}];
+            } else if (gameStyleMode === 2) {
+                // Style 2: Symmetric cyclic path (Symmetric)
+                chosenPairs = [{from: a1, to: a2}, {from: a2, to: a1}, {from: a2, to: a3}, {from: a3, to: a2}];
+            } else {
+                // Style 3 & 4: Dynamic completely randomized pair picking
+                const sampleCount = Math.floor(Math.random() * 5) + 2; // pick 2 to 6 pairs
+                const shuffled = allPossiblePairs.sort(() => 0.5 - Math.random());
+                chosenPairs = shuffled.slice(0, sampleCount);
+            }
+
+            // Sort logically for presentation aesthetics
+            chosenPairs.sort((a,b) => (a.from + a.to).localeCompare(b.from + b.to));
+            gameObject.currentPairs = chosenPairs;
+
+            // Run automated truth evaluation engine
+            evaluateCurrentGameAnswers();
+
+            // Render text string syntax output inside UI
+            const pairStrings = chosenPairs.map(p => `(${p.from},${p.to})`);
+            document.getElementById('game-question-display').innerText = `R = { ${pairStrings.join(', ')} }`;
+
+            // Retypeset the math node for Set A dynamically
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                window.MathJax.typesetPromise([document.getElementById('game-setA-display')]);
+            }
+        }
+
+        function evaluateCurrentGameAnswers() {
+            const pairs = gameObject.currentPairs;
+            const setA = gameObject.currentSetA;
+            
+            // Helper checker
+            const hasPair = (f, t) => pairs.some(p => p.from === f && p.to === t);
+
+            // 1. Reflexive: Every single element in randomized Set A must loop back to itself
+            let isRef = hasPair(setA[0], setA[0]) && hasPair(setA[1], setA[1]) && hasPair(setA[2], setA[2]);
+
+            // 2. Symmetric
+            let isSym = true;
+            pairs.forEach(p => {
+                if(!hasPair(p.to, p.from)) isSym = false;
+            });
+
+            // 3. Antisymmetric
+            let isAnti = true;
+            pairs.forEach(p => {
+                if(p.from !== p.to && hasPair(p.to, p.from)) isAnti = false;
+            });
+
+            // 4. Transitive
+            let isTran = true;
+            pairs.forEach(p1 => {
+                pairs.forEach(p2 => {
+                    if(p1.to === p2.from) {
+                        if(!hasPair(p1.from, p2.to)) isTran = false;
+                    }
+                });
+            });
+
+            gameObject.answers = {
+                reflexive: isRef,
+                symmetric: isSym,
+                antisymmetric: isAnti,
+                transitive: isTran
+            };
+        }
+
+        function checkGameAnswer() {
+            const userRef = document.getElementById('chk-game-reflexive').checked;
+            const userSym = document.getElementById('chk-game-symmetric').checked;
+            const userAnti = document.getElementById('chk-game-antisymmetric').checked;
+            const userTran = document.getElementById('chk-game-transitive').checked;
+
+            const correct = gameObject.answers;
+
+            const isPerfect = (userRef === correct.reflexive) &&
+                              (userSym === correct.symmetric) &&
+                              (userAnti === correct.antisymmetric) &&
+                              (userTran === correct.transitive);
+
+            const feedbackBox = document.getElementById('game-feedback');
+            feedbackBox.classList.remove('hidden');
+
+            if(isPerfect) {
+                gameObject.score += 10;
+                document.getElementById('game-score').innerText = gameObject.score;
+
+                feedbackBox.className = "text-xs p-3 rounded-lg font-medium border bg-emerald-50 text-emerald-800 border-emerald-200 flex items-start space-x-2 animate-bounce";
+                feedbackBox.innerHTML = `
+                    <i class="fa-solid fa-circle-check text-base text-emerald-600 mt-0.5 shrink-0"></i>
+                    <div>
+                        <span class="font-bold block">ถูกต้องที่สุด! (+10 คะแนน)</span>
+                        <p class="text-slate-600 mt-0.5">คุณวิเคราะห์โครงสร้างความสัมพันธ์ชุดนี้ได้อย่างถูกต้องแม่นยำ ลองกดสุ่มโจทย์ใหม่เพื่อสะสมคะแนนเพิ่มได้เลย!</p>
+                    </div>
+                `;
+            } else {
+                // Deduct or secure logic floor bounds
+                if(gameObject.score > 0) gameObject.score -= 5;
+                document.getElementById('game-score').innerText = gameObject.score;
+
+                // Create breakdown string text lists
+                let breakdown = [];
+                if(correct.reflexive) breakdown.push("สะท้อน");
+                if(correct.symmetric) breakdown.push("สมมาตร");
+                if(correct.antisymmetric) breakdown.push("ต้านสมมาตร");
+                if(correct.transitive) breakdown.push("ถ่ายทอด");
+
+                const ansStr = breakdown.length > 0 ? breakdown.join(', ') : "ไม่มีคุณสมบัติใดเลยข้างต้น";
+
+                feedbackBox.className = "text-xs p-3 rounded-lg font-medium border bg-rose-50 text-rose-800 border-rose-200 flex items-start space-x-2";
+                feedbackBox.innerHTML = `
+                    <i class="fa-solid fa-circle-xmark text-base text-rose-600 mt-0.5 shrink-0"></i>
+                    <div>
+                        <span class="font-bold block">คำตอบยังไม่ถูกต้อง (หัก -5 คะแนน)</span>
+                        <p class="text-slate-600 mt-0.5">คุณสมบัติจริงที่ถูกต้องของข้อนี้คือ: <strong class="text-indigo-950 font-bold font-sans">${ansStr}</strong>. ทบทวนนิยามข้างบนแล้วกดสุ่มโจทย์ใหม่อีกครั้งเพื่อแก้ตัวนะครับ</p>
+                    </div>
+                `;
+            }
+        }
+
         window.onload = function() {
             updateInteractiveDiagram();
             renderDatabase();
             renderMatrixUI();
             visualizeModuloRelation();
             switchDigraphModel('reflexive');
+            generateGameQuestion(); // Trigger initial challenge question state
 
             const svgEl = document.getElementById('mod-pie-svg');
             if(svgEl) {
